@@ -11,15 +11,17 @@ const cardStyle = {
     boxShadow: '0 .5rem 1rem rgba(0,0,0,.9)'
 }
 
+const date = new Date()
+
 class Blog extends Component {
 
     state = {
         posts: [
-            { id: uuidv4(), title: 'my first post', author: 'Pat O.', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!' },
-            { id: uuidv4(), title: 'my first post', author: 'Pat O.', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!' },
-            { id: uuidv4(), title: 'my first post', author: 'Pat O.', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!' },
-            { id: uuidv4(), title: 'my first post', author: 'Pat O.', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!' },
-            { id: uuidv4(), title: 'my first post', author: 'Pat O.', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!' }
+            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
+            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
+            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
+            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
+            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date }
         ],
         isOpen: false
     }
@@ -29,7 +31,7 @@ class Blog extends Component {
 
         return (
             <div>
-                <Container className="mt-5">
+                <Container className="mt-3">
                     <Row>
                         <Col sm="auto">
                             <Button color="primary"
@@ -40,7 +42,7 @@ class Blog extends Component {
                                     const body = prompt('enter post')
                                     if (title && author && body) {
                                         this.setState({
-                                            posts: [...posts, { id: uuidv4(), title, author, body }]
+                                            posts: [...posts, { id: uuidv4(), title, author, body, date }]
                                         })
                                     }
                                 }}>New Post</Button>
@@ -50,12 +52,10 @@ class Blog extends Component {
                                 {posts.map(({ id, title, author, body, image }) => (
                                     <CSSTransition key={id} timeout={500} classNames="fade">
                                         <Card color="secondary" outline className="mb-5" style={cardStyle}>
-                                            {/* <Card color="dark" dark inverse className="mb-5" style={cardStyle}> */}
                                             <CardImg top width="100%" src='https://placeimg.com/640/315/tech' alt="Card image cap" />
                                             <CardBody>
-                                                <CardTitle className="font-weight-bold">{title}</CardTitle>
-                                                <CardSubtitle className="font-weight-bold">{author}</CardSubtitle>
-                                                <CardText>{body}</CardText>
+                                                <CardTitle className="font-weight-bold">{author} || {title} </CardTitle>
+                                                <CardText>{date.toUTCString()}</CardText>
                                                 <Button>See More</Button>
                                                 <Button color="danger"
                                                     className="ml-3"

@@ -1,3 +1,21 @@
+@keyframes updown {
+  0% {
+    transform: translateY(-15%);
+  }
+
+  50% {
+    transform: translateY(15%);
+  }
+
+  100% {
+    transform: translateY(-15%);
+  }
+}
+
+.pulse {
+  animation: updown 2s ease infinite;
+}
+
 .fade-enter {
   opacity: 0;
 }
@@ -14,4 +32,13 @@
 .fade-exit-active {
   opacity: 0;
   transition: 1000ms ease-out;
+}
+
+.App {
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.active {
+  color: white;
 }

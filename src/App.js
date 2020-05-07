@@ -9,6 +9,7 @@ import Blog from './components/Blog'
 import Home from './components/Home'
 import LogIn from './components/LogIn'
 import NotFound from './components/NotFound'
+import Footer from './components/Footer'
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
             <Route path='/users/login' component={LogIn} />
             <Route component={NotFound} />
           </Switch>
+          <Footer />
         </BrowserRouter>
       </div>
     )

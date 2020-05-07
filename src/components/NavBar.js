@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink, Container } from 'reactstrap'
+import { Collapse, Navbar, NavbarToggler, Nav, NavLink, NavItem, Container } from 'reactstrap'
 import { IoLogoGithub } from 'react-icons/io'
 
 class NavBar extends Component {
@@ -19,7 +19,6 @@ class NavBar extends Component {
             <div>
                 <Navbar color="dark" dark expand="md">
                     <Container>
-                        {/* <NavbarBrand href="/">CodeBlog</NavbarBrand> */}
                         <NavbarToggler onClick={this.toggleOpen} />
                         <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
