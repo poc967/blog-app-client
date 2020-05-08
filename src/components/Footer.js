@@ -7,18 +7,19 @@ const divStyle = {
     display: 'flex',
     height: '5rem',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    color: '#878b8f'
 }
 
 
 const Footer = () => {
     return (
-        <div className="footer text-light bg-dark" style={divStyle}>
+        <div className="footer bg-dark light-text-white" style={divStyle}>
             <Container>
                 <Col xs="12" md={{ size: 4, offset: 4 }} style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-                    <AiFillFacebook size="30px" color="" />
-                    <AiOutlineInstagram size="30px" color="" />
-                    <AiOutlineTwitter size="30px" color="" />
+                    <AiFillFacebook size="30px" className="light-text-white" />
+                    <AiOutlineInstagram size="30px" className="light-text-white" />
+                    <AiOutlineTwitter size="30px" className="light-text-white" />
                 </Col>
             </Container>
         </div>

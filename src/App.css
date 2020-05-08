@@ -42,3 +42,7 @@
 .active {
   color: white;
 }
+
+.light-text-white:hover {
+  color: white;
+}

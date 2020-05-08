@@ -31,7 +31,7 @@ class Blog extends Component {
 
         return (
             <div>
-                <Container className="mt-3">
+                <Container className="mt-3" style={{ minHeight: '100vh' }}>
                     <Row>
                         <Col sm="auto">
                             <Button color="primary"
