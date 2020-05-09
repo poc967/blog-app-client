@@ -32,7 +32,7 @@ class NavBar extends Component {
                                     <NavLink href='/users/login'>Log In</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    <NavLink href='http://github.com/poc967'>
+                                    <NavLink href='http://github.com/poc967/blog-app-client'>
                                         <IoLogoGithub size="25px" />
                                     </NavLink>
                                 </NavItem>
