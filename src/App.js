@@ -12,15 +12,26 @@ import NotFound from './components/NotFound'
 import Footer from './components/Footer'
 
 class App extends Component {
+
+  state = {
+    isOpen: false
+  }
+
+  toggleOpen = (e) => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
           <NavBar />
           <Switch>
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
             <Route path='/blog' component={Blog} />
-            <Route path='/users/login' component={LogIn} />
+            <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
             <Route component={NotFound} />
           </Switch>
           <Footer />
