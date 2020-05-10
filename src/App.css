@@ -12,6 +12,10 @@
   }
 }
 
+*:focus {
+  outline: 0 !important;
+}
+
 .pulse {
   animation: updown 2s ease infinite;
 }
@@ -45,4 +49,5 @@
 
 .light-text-white:hover {
   color: white;
+  transition: 500ms ease-out;
 }

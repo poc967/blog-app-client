@@ -1,34 +1,28 @@
 import React, { Component } from 'react'
+import { PropTypes } from 'prop-types'
 import {
     Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Container, Col, Row
+    CardTitle, Button, Container, Col, Row
 } from 'reactstrap';
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { v4 as uuidv4 } from 'uuid'
 
+// redux
+import { connect } from 'react-redux'
+import { getPosts } from '../actions/postActions'
 
 const cardStyle = {
     boxShadow: '0 .5rem 1rem rgba(0,0,0,.9)'
 }
 
-const date = new Date()
-
 class Blog extends Component {
 
-    state = {
-        posts: [
-            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
-            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
-            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
-            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date },
-            { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/240/tech', body: 'Lorem Ipsum this is a new post!!', date }
-        ],
-        isOpen: false
+    componentDidMount() {
+        this.props.getPosts()
     }
 
     render() {
-        const { posts } = this.state
-
+        const { posts } = this.props.post
         return (
             <div>
                 <Container className="mt-3" style={{ minHeight: '100vh' }}>
@@ -42,17 +36,17 @@ class Blog extends Component {
                                     const body = prompt('enter post')
                                     if (title && author && body) {
                                         this.setState({
-                                            posts: [...posts, { id: uuidv4(), title, author, body, date }]
+                                            posts: [...posts, { id: uuidv4(), title, author, body }]
                                         })
                                     }
                                 }}>New Post</Button>
                         </Col>
                         <Col sm="12" md={{ size: 9, offset: 0 }}>
                             <TransitionGroup className="blog-posts">
-                                {posts.map(({ id, title, author, body, image }) => (
+                                {posts.map(({ id, title, author, body, image, date }) => (
                                     <CSSTransition key={id} timeout={500} classNames="fade">
-                                        <Card color="secondary" outline className="mb-5" style={cardStyle}>
-                                            <CardImg top width="100%" src='https://placeimg.com/640/315/tech' alt="Card image cap" />
+                                        <Card color="dark" inverse className="mb-5" style={cardStyle}>
+                                            <CardImg top width="100%" src={image} alt="Card image cap" />
                                             <CardBody>
                                                 <CardTitle className="font-weight-bold">{author} || {title} </CardTitle>
                                                 <CardText>{date.toUTCString()}</CardText>
@@ -77,4 +71,13 @@ class Blog extends Component {
     }
 }
 
-export default Blog
+Blog.propTypes = {
+    getPosts: PropTypes.func.isRequired,
+    post: PropTypes.object.isRequired
+}
+
+const mapStateToProps = (state) => ({
+    post: state.post.state
+})
+
+export default connect(mapStateToProps, { getPosts })(Blog)

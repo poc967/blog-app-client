@@ -5,14 +5,18 @@ const closeStyle = {
     textShadow: 'none'
 }
 
+const modalStyle = {
+    borderRadius: '0'
+}
+
 const SignUp = (props) => {
 
     const closeButton = <button className="close" onClick={() => props.toggleOpen()} style={closeStyle}>&times;</button>
 
     return (
-        <Modal isOpen={props.isOpen} toggle={() => props.toggleOpen()}>
-            <ModalHeader toggle={() => props.toggleOpen()} close={closeButton}>Sign Up</ModalHeader>
-            <ModalBody >
+        <Modal style={modalStyle} className="text-light" isOpen={props.isOpen} toggle={() => props.toggleOpen()}>
+            <ModalHeader className="bg-dark" toggle={() => props.toggleOpen()} close={closeButton}>Sign Up</ModalHeader>
+            <ModalBody className="bg-dark text-light">
                 <FormGroup>
                     <Label for="firstName">First Name</Label>
                     <Input type="email" name="firstName" id="firstName" placeholder="John" />
