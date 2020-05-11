@@ -12,3 +12,10 @@ export const deletePost = (id) => {
         payload: id
     }
 }
+
+export const addPost = (post) => {
+    return {
+        type: ADD_POST,
+        payload: post
+    }
+}

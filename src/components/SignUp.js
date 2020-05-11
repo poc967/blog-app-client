@@ -38,7 +38,7 @@ const SignUp = (props) => {
                     <Input type="password" name="confirmPassword" id="exampleConfirmPassword" placeholder="supersecret" />
                 </FormGroup>
                 <ModalFooter>
-                    <Button outline color="primary">Get Started!</Button>
+                    <Button outline color="primary" block>Get Started!</Button>
                 </ModalFooter>
             </ModalBody>
         </Modal>
