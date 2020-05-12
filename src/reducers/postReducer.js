@@ -1,16 +1,10 @@
-import { GET_POSTS, ADD_POST, DELETE_POST } from '../actions/types'
-import { v4 as uuidv4 } from 'uuid'
+import { GET_POSTS, ADD_POST, DELETE_POST, POSTS_LOADING } from '../actions/types'
 
 const date = new Date()
 
 const initialState = {
-    posts: [
-        { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
-        { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
-        { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
-        { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date },
-        { id: uuidv4(), title: 'Lorem Ipsum', author: 'Patrick OConnor', image: 'https://placeimg.com/640/315/tech', body: 'Lorem Ipsum this is a new post!!', date }
-    ]
+    posts: [],
+    loading: false
 }
 
 export default function (state = initialState, action) {
@@ -28,6 +22,11 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 posts: [action.payload, ...state.posts]
+            }
+        case POSTS_LOADING:
+            return {
+                ...state,
+                loading: true
             }
         default:
             return state

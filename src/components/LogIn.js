@@ -14,11 +14,11 @@ const LogIn = (props) => {
                     <Form>
                         <FormGroup>
                             <Label for="email">Email</Label>
-                            <Input type="email" name="email" id="exampleEmail" placeholder="email@codeblog.com" />
+                            <Input type="email" name="email" id="exampleEmail" placeholder="email@codeblog.com" required />
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Password</Label>
-                            <Input type="password" name="password" id="examplePassword" placeholder="supersecret" />
+                            <Input type="password" name="password" id="examplePassword" placeholder="supersecret" required />
                         </FormGroup>
                         <Row>
                             <Col xs="auto">

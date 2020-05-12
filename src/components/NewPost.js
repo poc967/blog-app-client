@@ -40,12 +40,6 @@ class NewPost extends Component {
 
         this.props.addPost(newPost)
 
-        this.setState = ({
-            title: '',
-            author: '',
-            body: ''
-        })
-
         this.props.toggleOpen()
     }
 
@@ -60,15 +54,15 @@ class NewPost extends Component {
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
                             <Label for="title">Title</Label>
-                            <Input type="text" name="title" id="title" placeholder="Lorem Ipsum" onChange={this.onChange} />
+                            <Input type="text" name="title" id="title" placeholder="Lorem Ipsum" required onChange={this.onChange} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="author">Author</Label>
-                            <Input type="text" name="author" id="author" placeholder="John Smith" onChange={this.onChange} />
+                            <Input type="text" name="author" id="author" placeholder="John Smith" required onChange={this.onChange} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="body">Body</Label>
-                            <Input type="textarea" name="body" id="body" placeholder="Write post here..." onChange={this.onChange} />
+                            <Input type="textarea" name="body" id="body" placeholder="Write post here..." required onChange={this.onChange} />
                         </FormGroup>
                         <ModalFooter>
                             <Button type="submit" color="primary" block>Submit</Button>

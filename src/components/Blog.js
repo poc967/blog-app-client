@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import {
-    Card, CardImg, CardText, CardBody, CardTitle, Button, Container, Col, Row
+    Card, CardText, CardBody, CardTitle, Button, Container, Col, Row
 } from 'reactstrap';
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import NewPost from './NewPost'
@@ -12,6 +12,12 @@ import { getPosts, deletePost } from '../actions/postActions'
 
 const cardStyle = {
     boxShadow: '0 .5rem 1rem rgba(0,0,0,.9)'
+}
+
+const cardBodyStyle = {
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis'
 }
 
 class Blog extends Component {
@@ -48,15 +54,16 @@ class Blog extends Component {
                         </Col>
                         <Col sm="12" md={{ size: 9, offset: 0 }}>
                             <TransitionGroup className="blog-posts">
-                                {posts.map(({ id, title, author, image, date }) => (
+                                {posts.map(({ id, title, author, body, date }) => (
                                     <CSSTransition key={id} timeout={500} classNames="fade">
                                         <Card color="dark" inverse className="mb-5" style={cardStyle}>
-                                            <CardImg top width="100%" src={image} alt="Card image cap" />
                                             <CardBody>
-                                                <CardTitle className="font-weight-bold">{author} || {title} </CardTitle>
+                                                <CardTitle className="font-weight-bold">{title} || {author}</CardTitle>
                                                 <CardText>{date.toUTCString()}</CardText>
-                                                <Button>See More</Button>
+                                                <CardText style={cardBodyStyle}>{body}</CardText>
+                                                <Button color="secondary" inverse>See More</Button>
                                                 <Button color="danger"
+                                                    outline
                                                     className="ml-3"
                                                     onClick={() => this.onDeleteClick(id)}>Remove</Button>
                                             </CardBody>
