@@ -2,16 +2,15 @@ import React from 'react'
 import { Jumbotron, Button, Container, Row, Col } from 'reactstrap'
 import { RiArrowDownSLine } from 'react-icons/ri'
 import SignUp from './SignUp'
-import night from '../images/night.jpg'
 
 const divStyle = {
     borderRadius: '0px',
-    backgroundColor: 'white',
-    color: 'white',
+    backgroundColor: 'grey',
+    color: 'dark',
     minHeight: 'calc(100vh - 58.3px)',
     marginBottom: '0',
-    background: `url(${night}) no-repeat center center`,
-    backgroundSize: 'cover'
+    // background: `url(${night}) no-repeat center center`,
+    // backgroundSize: 'cover'
 }
 
 const arrowStyle = {
@@ -61,7 +60,7 @@ const Home = (props) => {
                         <p className="h2 mb-3">This is a simple react blog designed for developers to showcase react designs</p>
                         <Row>
                             <Col xs="12" md={{ size: 3, offset: 0 }}>
-                                <Button outline color="primary" onClick={props.toggleOpen}>Sign Up Now</Button>
+                                <Button outline color="dark" onClick={props.toggleOpen}>Sign Up Now</Button>
                                 <SignUp isOpen={props.isOpen} toggleOpen={props.toggleOpen} />
                             </Col>
                         </Row>
@@ -75,7 +74,7 @@ const Home = (props) => {
                 <Container>
                     <Row>
                         <Col xs="12" style={colStyle}>
-                            <img width="100%" src="https://placeimg.com/650/220/tech" alt="tech img" style={imgStyle} className="img-fluid" data-aos="fade-left" data-aos-duration="1000" data-aos-offset="400" />
+                            <img width="100%" src="https://placeimg.com/650/220/tech" alt="tech img" style={imgStyle} className="img-fluid" data-aos="fade-left" data-aos-duration="1000" data-aos-offset="100" />
                         </Col>
                     </Row>
                     <Row style={pStyle}>

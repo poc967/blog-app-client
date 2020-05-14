@@ -3,6 +3,10 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
+// redux
+import { Provider } from 'react-redux'
+import store from './store'
+
 //Components
 import NavBar from './components/NavBar'
 import Blog from './components/Blog'
@@ -25,18 +29,20 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <BrowserRouter>
-          <NavBar />
-          <Switch>
-            <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
-            <Route path='/blog' component={Blog} />
-            <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
-            <Route component={NotFound} />
-          </Switch>
-          <Footer />
-        </BrowserRouter>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <BrowserRouter>
+            <NavBar />
+            <Switch>
+              <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
+              <Route path='/blog' component={Blog} />
+              <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
+              <Route component={NotFound} />
+            </Switch>
+            <Footer />
+          </BrowserRouter>
+        </div>
+      </Provider>
     )
   }
 }
