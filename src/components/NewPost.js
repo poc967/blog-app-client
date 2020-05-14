@@ -1,14 +1,11 @@
 import React, { Component } from 'react'
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Form } from 'reactstrap'
-import { v4 as uuidv4 } from 'uuid'
 
 // redux
 import { connect } from 'react-redux'
 import { addPost } from '../actions/postActions'
 
 // For modals, should probably embed the open button inside the modal component rather than the parent component
-
-const date = new Date()
 
 class NewPost extends Component {
 
@@ -31,11 +28,10 @@ class NewPost extends Component {
         e.preventDefault()
 
         const newPost = {
-            id: uuidv4(),
             title: this.state.title,
             author: this.state.author,
             body: this.state.body,
-            date
+            category: this.state.category
         }
 
         this.props.addPost(newPost)
@@ -59,6 +55,10 @@ class NewPost extends Component {
                         <FormGroup>
                             <Label for="author">Author</Label>
                             <Input type="text" name="author" id="author" placeholder="John Smith" required onChange={this.onChange} />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label for="category">Category</Label>
+                            <Input type="text" name="category" id="category" placeholder="Mystery" required onChange={this.onChange} />
                         </FormGroup>
                         <FormGroup>
                             <Label for="body">Body</Label>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
 import {
-    Card, CardText, CardBody, CardTitle, Button, Container, Col, Row
+    Card, CardText, CardBody, CardTitle, Button, Container, Col, Row, Spinner, Badge
 } from 'reactstrap';
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import NewPost from './NewPost'
@@ -20,10 +20,16 @@ const cardBodyStyle = {
     textOverflow: 'ellipsis'
 }
 
+const spinnerStyle = {
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+}
+
 class Blog extends Component {
 
     componentDidMount() {
-        console.log('fetching')
         this.props.getPosts()
     }
 
@@ -42,7 +48,11 @@ class Blog extends Component {
     }
 
     render() {
-        const { posts } = this.props.post
+
+        const { posts, loading } = this.props.post
+
+        if (loading) return <Container style={spinnerStyle}><Spinner color="info" style={{ width: '7rem', height: '7rem' }} /></Container>
+
         return (
             <div>
                 <NewPost isOpen={this.state.isOpen} toggleOpen={this.toggleOpen} />
@@ -54,18 +64,18 @@ class Blog extends Component {
                         </Col>
                         <Col sm="12" md={{ size: 9, offset: 0 }}>
                             <TransitionGroup className="blog-posts">
-                                {posts.map(({ id, title, author, body, date }) => (
-                                    <CSSTransition key={id} timeout={500} classNames="fade">
+                                {posts.map(({ _id, title, author, body, category, createdAt }) => (
+                                    <CSSTransition key={_id} timeout={500} classNames="fade">
                                         <Card color="dark" inverse className="mb-5" style={cardStyle}>
-                                            <CardBody>
-                                                <CardTitle className="font-weight-bold">{title} || {author}</CardTitle>
-                                                <CardText>{date.toUTCString()}</CardText>
+                                            <CardBody style={{ borderRight: 'solid #28a745 20px' }}>
+                                                <CardTitle className="font-weight-bold" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{title} || {author}<Badge color="success" pill>{category}</Badge></CardTitle>
+                                                <CardText>Date Created: {createdAt}</CardText>
                                                 <CardText style={cardBodyStyle}>{body}</CardText>
-                                                <Button color="secondary" inverse>See More</Button>
+                                                <Button color="secondary">See More</Button>
                                                 <Button color="danger"
                                                     outline
                                                     className="ml-3"
-                                                    onClick={() => this.onDeleteClick(id)}>Remove</Button>
+                                                    onClick={() => this.onDeleteClick(_id)}>Remove</Button>
                                             </CardBody>
                                         </Card>
                                     </CSSTransition>
@@ -86,7 +96,8 @@ Blog.propTypes = {
 }
 
 const mapStateToProps = (state) => ({
-    post: state.post
+    post: state.post,
+    loading: state.loading
 })
 
 export default connect(mapStateToProps, { getPosts, deletePost })(Blog)
