@@ -5,14 +5,13 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, I
 import { connect } from 'react-redux'
 import { addPost } from '../actions/postActions'
 
-// For modals, should probably embed the open button inside the modal component rather than the parent component
-
 class NewPost extends Component {
 
     state = {
         title: '',
         author: '',
-        body: ''
+        body: '',
+        isOpen: false
     }
 
     onChange = (e) => {
@@ -21,6 +20,12 @@ class NewPost extends Component {
 
         this.setState({
             [key]: value
+        })
+    }
+
+    toggleOpen = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
         })
     }
 
@@ -36,40 +41,49 @@ class NewPost extends Component {
 
         this.props.addPost(newPost)
 
-        this.props.toggleOpen()
+        this.toggleOpen()
     }
 
     render() {
 
-        const closeButton = <button className="close" onClick={() => this.props.toggleOpen()}>&times;</button>
+        const closeButton = <button className="close" onClick={this.toggleOpen}>&times;</button>
 
         return (
-            <Modal isOpen={this.props.isOpen} toggle={() => this.props.toggleOpen()}>
-                <ModalHeader className="bg-dark text-light" toggle={() => this.props.toggleOpen()} close={closeButton}>New Post</ModalHeader>
-                <ModalBody className="bg-dark text-light">
-                    <Form onSubmit={this.handleSubmit}>
-                        <FormGroup>
-                            <Label for="title">Title</Label>
-                            <Input type="text" name="title" id="title" placeholder="Lorem Ipsum" required onChange={this.onChange} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="author">Author</Label>
-                            <Input type="text" name="author" id="author" placeholder="John Smith" required onChange={this.onChange} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="category">Category</Label>
-                            <Input type="text" name="category" id="category" placeholder="Mystery" required onChange={this.onChange} />
-                        </FormGroup>
-                        <FormGroup>
-                            <Label for="body">Body</Label>
-                            <Input type="textarea" name="body" id="body" placeholder="Write post here..." required onChange={this.onChange} />
-                        </FormGroup>
-                        <ModalFooter>
-                            <Button type="submit" color="primary" block>Submit</Button>
-                        </ModalFooter>
-                    </Form>
-                </ModalBody>
-            </Modal>
+            <div>
+                <Button color="primary" className="mb-3" onClick={this.toggleOpen}>New Post</Button>
+                <Modal isOpen={this.state.isOpen} toggle={this.toggleOpen}>
+                    <ModalHeader className="bg-dark text-light" toggle={this.toggleOpen} close={closeButton}>New Post</ModalHeader>
+                    <ModalBody className="bg-dark text-light">
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
+                                <Label for="title">Title</Label>
+                                <Input type="text" name="title" id="title" placeholder="Lorem Ipsum" required onChange={this.onChange} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="author">Author</Label>
+                                <Input type="text" name="author" id="author" placeholder="John Smith" required onChange={this.onChange} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="category">Category</Label>
+                                <Input type="select" name="category" id="category" placeholder="Mystery" required onChange={this.onChange}>
+                                    <option>Drama</option>
+                                    <option>Mystery</option>
+                                    <option>Recipe</option>
+                                    <option>Thriller</option>
+                                    <option>How-to</option>
+                                </Input>
+                            </FormGroup>
+                            <FormGroup>
+                                <Label for="body">Body</Label>
+                                <Input type="textarea" name="body" id="body" placeholder="Write post here..." required onChange={this.onChange} />
+                            </FormGroup>
+                            <ModalFooter>
+                                <Button type="submit" color="primary" block>Submit</Button>
+                            </ModalFooter>
+                        </Form>
+                    </ModalBody>
+                </Modal>
+            </div>
         )
     }
 }
