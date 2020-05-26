@@ -6,6 +6,7 @@ import './App.css'
 // redux
 import { Provider } from 'react-redux'
 import store from './store'
+import { getUser } from './actions/authActions'
 
 //Components
 import NavBar from './components/NavBar'
@@ -16,6 +17,10 @@ import NotFound from './components/NotFound'
 import Footer from './components/Footer'
 
 class App extends Component {
+
+  componentDidMount() {
+    store.dispatch(getUser())
+  }
 
   state = {
     isOpen: false
