@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { PropTypes } from 'prop-types'
-import { Card, CardText, CardBody, CardTitle, Button, Container, Col, Row, Spinner, Badge } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle, Button, Container, Col, Row, Spinner, Badge, UncontrolledCollapse } from 'reactstrap';
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 // components
@@ -35,7 +35,8 @@ const spinnerStyle = {
 
 class Blog extends Component {
     state = {
-        selectedOptions: []
+        selectedOptions: [],
+        isOpen: false
     }
 
     addSelectedOptions = (selectedOptions) => {
@@ -52,12 +53,13 @@ class Blog extends Component {
         this.props.deletePost(id)
     }
 
+    handleOpen = () => {
+
+    }
+
     render() {
-
         const { posts, loading } = this.props.post
-
         const options = this.state.selectedOptions === null ? [] : this.state.selectedOptions.map(option => option.value)
-
         const filteredPosts = (this.state.selectedOptions === null || this.state.selectedOptions.length === 0) ? posts : posts.filter(post => options.includes(post.category))
 
         return (
@@ -66,10 +68,13 @@ class Blog extends Component {
                     <Container className="mt-3" style={{ minHeight: '100vh' }}>
                         <Row>
                             <Col sm="auto">
-                                <NewPost />
+                                <NewPost block />
+                                <Button block id="toggler" class="mb-3">Filter</Button>
                             </Col>
                             <Col sm="12" md={{ size: 9, offset: 0 }}>
-                                <FilterPosts postCategories={posts} addSelectedOptions={this.addSelectedOptions} selectedOptions={this.state.selectedOptions} />
+                                <UncontrolledCollapse toggler="#toggler">
+                                    <FilterPosts postCategories={posts} addSelectedOptions={this.addSelectedOptions} selectedOptions={this.state.selectedOptions} class="mb-3" />
+                                </UncontrolledCollapse>
                                 <TransitionGroup className="blog-posts">
                                     {filteredPosts.map(({ _id, title, author, body, category, createdAt }) => (
                                         <CSSTransition key={_id} timeout={500} classNames="fade">

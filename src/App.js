@@ -7,6 +7,7 @@ import './App.css'
 import { Provider } from 'react-redux'
 import store from './store'
 import { getUser } from './actions/authActions'
+import { clearErrors } from './actions/errorActions'
 
 //Components
 import NavBar from './components/NavBar'
@@ -27,6 +28,7 @@ class App extends Component {
   }
 
   toggleOpen = (e) => {
+    store.dispatch(clearErrors())
     this.setState({
       isOpen: !this.state.isOpen
     })
@@ -52,4 +54,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App

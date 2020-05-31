@@ -34,6 +34,26 @@ export const setUserLoading = () => {
     }
 }
 
+export const registerUser = (newUser) => async (dispatch) => {
+    const { firstName, lastName, email, password } = newUser
+
+    const body = { firstName, lastName, email, password }
+
+    try {
+        const response = await axios.post('/users', body)
+        dispatch({
+            type: REGISTER_SUCCESS,
+            payload: response.data
+        })
+    } catch (error) {
+        dispatch({
+            type: REGISTER_FAIL
+        })
+        dispatch(returnErrors(error.response.data.message, error.response.status, "REGISTER_FAIL"))
+    }
+
+}
+
 export const setupConfig = async (getState) => {
     const token = await getState().auth.token
 
