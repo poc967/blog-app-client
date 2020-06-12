@@ -15,22 +15,40 @@ export const getUser = () => async (dispatch, getState) => {
     dispatch(setUserLoading())
 
     try {
-        const response = await axios.get('/users', setupConfig(getState))
+        const response = await axios.get('/users', { withCredentials: true })
         dispatch({
             type: USER_LOADED,
             payload: response.data
         })
     } catch (error) {
-        dispatch(returnErrors(error.response.data.message, error.response.status))
-        dispatch({
-            type: AUTH_ERROR,
-        })
+        if (error.response) {
+            dispatch(returnErrors(error.response.data.message, error.response.status))
+            dispatch({
+                type: AUTH_ERROR,
+            })
+        }
     }
 }
 
 export const setUserLoading = () => {
     return {
         type: USER_LOADING
+    }
+}
+
+export const authenticateUser = ({ email, password }) => async (dispatch) => {
+    const body = { email, password }
+    try {
+        const response = await axios.post('/users/login', body)
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: response.data
+        })
+    } catch (error) {
+        dispatch({
+            type: LOGIN_FAIL
+        })
+        dispatch(returnErrors(error.response.data.message, error.response.status, "LOGIN_FAIL"))
     }
 }
 
@@ -54,18 +72,13 @@ export const registerUser = (newUser) => async (dispatch) => {
 
 }
 
-export const setupConfig = async (getState) => {
-    const token = await getState().auth.token
-
-    const config = {
-        headers: {
-            "Content-type": "application/json"
-        }
+export const destroySession = () => async (dispatch) => {
+    try {
+        await axios.post('/users/logout')
+        dispatch({
+            type: LOGOUT_SUCCESS
+        })
+    } catch (error) {
+        dispatch(returnErrors(error.response.data.message, error.response.status))
     }
-
-    if (token) {
-        config.headers['x-auth-token'] = token
-    }
-
-    return config
 }

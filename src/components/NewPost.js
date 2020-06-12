@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, FormGroup, Label, Input, Form } from 'reactstrap'
+import { PropTypes } from 'prop-types'
 
 // redux
 import { connect } from 'react-redux'
@@ -34,7 +35,8 @@ class NewPost extends Component {
 
         const newPost = {
             title: this.state.title,
-            author: this.state.author,
+            // author: this.props.user.id,
+            author: localStorage.getItem('user_id'),
             body: this.state.body,
             category: this.state.category
         }
@@ -58,10 +60,6 @@ class NewPost extends Component {
                             <FormGroup>
                                 <Label for="title">Title</Label>
                                 <Input type="text" name="title" id="title" placeholder="Lorem Ipsum" required onChange={this.onChange} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label for="author">Author</Label>
-                                <Input type="text" name="author" id="author" placeholder="John Smith" required onChange={this.onChange} />
                             </FormGroup>
                             <FormGroup>
                                 <Label for="category">Category</Label>
@@ -88,8 +86,13 @@ class NewPost extends Component {
     }
 }
 
+NewPost.propTypes = {
+    user: PropTypes.object
+}
+
 const mapStateToProps = (state) => ({
-    post: state.post
+    post: state.post,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { addPost })(NewPost)

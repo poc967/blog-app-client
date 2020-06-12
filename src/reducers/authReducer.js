@@ -10,7 +10,6 @@ import {
 } from '../actions/types'
 
 const initialState = {
-    token: localStorage.getItem('token'),
     isAuthenticated: false,
     loading: false,
     user: null
@@ -24,18 +23,29 @@ export default function (state = initialState, action) {
                 loading: true
             }
         case USER_LOADED:
+            localStorage.setItem('user_id', action.payload._id)
+            localStorage.setItem('isAuthenticated', true)
             return {
                 ...state,
                 loading: false,
                 isAuthenticated: true,
-                user: action.payload
+                user: {
+                    id: action.payload._id,
+                    email: action.payload.email,
+                    firstName: action.payload.firstName
+                }
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            localStorage.setItem('token', action.payload.token)
+            localStorage.setItem('user_id', action.payload._id)
+            localStorage.setItem('isAuthenticated', true)
             return {
                 ...state,
-                ...action.payload,
+                user: {
+                    id: action.payload._id,
+                    email: action.payload.email,
+                    firstName: action.payload.firstName
+                },
                 isAuthenticated: true,
                 loading: false
             }
@@ -43,10 +53,10 @@ export default function (state = initialState, action) {
         case REGISTER_FAIL:
         case LOGOUT_SUCCESS:
         case AUTH_ERROR:
-            localStorage.removeItem('token')
+            localStorage.removeItem('user_id')
+            localStorage.setItem('isAuthenticated', false)
             return {
                 ...state,
-                token: null,
                 isAuthenticated: false,
                 loading: false,
                 user: null

@@ -81,3 +81,7 @@ export function passwordStrength(password) {
     if (!containsNumber) message.push('Must contain at least one number')
     return message
 }
+
+export function getUserNameById(id) {
+
+}

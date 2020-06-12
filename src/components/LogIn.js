@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
-import { Form, FormGroup, Label, Input, Container, Col, Button, Row } from 'reactstrap'
+import { Form, FormGroup, Label, Input, Container, Col, Button, Row, Alert } from 'reactstrap'
 import SignUp from './SignUp'
+import PropTypes from 'prop-types'
+
+// redux
+import { connect } from 'react-redux'
+import { authenticateUser } from '../actions/authActions'
+import { Redirect } from 'react-router-dom'
 
 const style = {
     minHeight: '100vh'
@@ -10,7 +16,23 @@ class LogIn extends Component {
 
     state = {
         email: '',
-        password: ''
+        password: '',
+        message: null
+    }
+
+    componentDidUpdate = (prevProps) => {
+        const { error } = this.props
+        if (error !== prevProps.error) {
+            if (error.id === 'LOGIN_FAIL') {
+                this.setState({
+                    message: error.message
+                })
+            } else {
+                this.setState({
+                    message: null
+                })
+            }
+        }
     }
 
     handleChange = (e) => {
@@ -21,7 +43,15 @@ class LogIn extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log('submit')
+
+        const { email, password } = this.state
+
+        const user = {
+            email,
+            password
+        }
+
+        this.props.authenticateUser(user)
     }
 
     render() {
@@ -30,6 +60,7 @@ class LogIn extends Component {
             <div style={style}>
                 <Container className="mt-5">
                     <Col sm="12" md={{ size: 6, offset: 3 }}>
+                        {this.state.message ? <Alert color="danger">{this.state.message}</Alert> : null}
                         <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label for="email">Email</Label>
@@ -69,4 +100,12 @@ class LogIn extends Component {
     }
 }
 
-export default LogIn
+LogIn.propTypes = {
+    authenticateUser: PropTypes.func.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    error: state.error
+})
+
+export default connect(mapStateToProps, { authenticateUser })(LogIn)

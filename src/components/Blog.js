@@ -13,6 +13,7 @@ import { getPosts, deletePost } from '../actions/postActions'
 
 // helpers
 import { calcDate, pillColor, borderColor } from '../utils/helperFunctions'
+import { Redirect } from 'react-router-dom';
 
 // styles
 const cardStyle = {
@@ -36,7 +37,8 @@ const spinnerStyle = {
 class Blog extends Component {
     state = {
         selectedOptions: [],
-        isOpen: false
+        isOpen: false,
+        user: null
     }
 
     addSelectedOptions = (selectedOptions) => {
@@ -49,6 +51,18 @@ class Blog extends Component {
         this.props.getPosts()
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.user !== prevProps.user) {
+            if (this.props.user) {
+                const { _id } = this.props.user
+
+                this.setState({ user: _id })
+            } else {
+                this.setState({ user: null })
+            }
+        }
+    }
+
     onDeleteClick = (id) => {
         this.props.deletePost(id)
     }
@@ -58,18 +72,19 @@ class Blog extends Component {
     }
 
     render() {
+
         const { posts, loading } = this.props.post
         const options = this.state.selectedOptions === null ? [] : this.state.selectedOptions.map(option => option.value)
         const filteredPosts = (this.state.selectedOptions === null || this.state.selectedOptions.length === 0) ? posts : posts.filter(post => options.includes(post.category))
 
         return (
-            loading ? <Container style={spinnerStyle}><Spinner color="info" style={{ width: '7rem', height: '7rem' }} /></Container> :
+            loading ? <Container style={spinnerStyle}><Spinner color="info" style={{ width: '7rem', height: '7rem' }} /></Container > :
                 < div >
                     <Container className="mt-3" style={{ minHeight: '100vh' }}>
                         <Row>
                             <Col sm="auto">
                                 <NewPost block />
-                                <Button block id="toggler" class="mb-3">Filter</Button>
+                                <Button block id="toggler" className="mb-3">Filter</Button>
                             </Col>
                             <Col sm="12" md={{ size: 9, offset: 0 }}>
                                 <UncontrolledCollapse toggler="#toggler">
@@ -81,7 +96,7 @@ class Blog extends Component {
                                             <Card className="mb-5" style={cardStyle}>
                                                 <CardBody style={{ borderRight: `solid ${borderColor(category)} 20px` }}>
                                                     <CardTitle className="font-weight-bold" style={{ cardBodyStyle, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        {title} || {author}<Badge color={pillColor(category)} pill>{category}</Badge>
+                                                        {title} || {`${author.firstName} ${author.lastName}`}<Badge color={pillColor(category)} pill>{category}</Badge>
                                                     </CardTitle>
                                                     <CardText>Date Created: {calcDate(createdAt)}</CardText>
                                                     <CardText style={cardBodyStyle}>{body}</CardText>
@@ -106,12 +121,14 @@ class Blog extends Component {
 Blog.propTypes = {
     getPosts: PropTypes.func.isRequired,
     deletePost: PropTypes.func.isRequired,
-    post: PropTypes.object.isRequired
+    post: PropTypes.object.isRequired,
+    user: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
     post: state.post,
-    loading: state.loading
+    loading: state.loading,
+    user: state.auth.user
 })
 
 export default connect(mapStateToProps, { getPosts, deletePost })(Blog)
