@@ -6,6 +6,8 @@ import './App.css'
 // redux
 import { Provider } from 'react-redux'
 import store from './store'
+import { getUser } from './actions/authActions'
+import { clearErrors } from './actions/errorActions'
 
 //Components
 import NavBar from './components/NavBar'
@@ -17,17 +19,23 @@ import Footer from './components/Footer'
 
 class App extends Component {
 
+  componentDidMount() {
+    store.dispatch(getUser())
+  }
+
   state = {
     isOpen: false
   }
 
   toggleOpen = (e) => {
+    store.dispatch(clearErrors())
     this.setState({
       isOpen: !this.state.isOpen
     })
   }
 
   render() {
+
     return (
       <Provider store={store}>
         <div className="App">
@@ -47,4 +55,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
