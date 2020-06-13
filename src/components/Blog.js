@@ -63,15 +63,6 @@ class Blog extends Component {
         const options = this.state.selectedOptions === null ? [] : this.state.selectedOptions.map(option => option.value)
         const filteredPosts = (this.state.selectedOptions === null || this.state.selectedOptions.length === 0) ? posts : posts.filter(post => options.includes(post.category))
 
-        const removeButton = (
-            <Button color="danger"
-                outline
-                className="ml-3"
-                onClick={() => this.onDeleteClick()}>
-                Remove
-            </Button >
-        )
-
         return (
             loading ? <Container style={spinnerStyle}><Spinner color="info" style={{ width: '7rem', height: '7rem' }} /></Container > :
                 < div >

@@ -5,8 +5,18 @@ import 'aos/dist/aos.css'
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// redux
+import { Provider } from 'react-redux'
+import { configureStore } from './store'
+import { PersistGate } from 'redux-persist/integration/react'
+const { store, persistor } = configureStore()
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>,
   document.getElementById('root')
 );
 
