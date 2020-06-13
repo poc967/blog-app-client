@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 // redux
 import { connect } from 'react-redux'
 import { authenticateUser } from '../actions/authActions'
-import { Redirect } from 'react-router-dom'
 
 const style = {
     minHeight: '100vh'

@@ -10,8 +10,7 @@ import { destroySession } from '../actions/authActions'
 class NavBar extends Component {
 
     state = {
-        isOpen: false,
-        isAuthenticated: false
+        isOpen: false
     }
 
     toggleOpen = () => {

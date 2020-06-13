@@ -16,7 +16,7 @@ const middleware = [thunk, logger]
 
 export function configureStore() {
     let store = createStore(persistedReducer, compose(
-        applyMiddleware(...middleware)))
+        applyMiddleware(...middleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()))
     let persistor = persistStore(store)
     return { store, persistor }
 }
