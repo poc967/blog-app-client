@@ -35,8 +35,7 @@ class NewPost extends Component {
 
         const newPost = {
             title: this.state.title,
-            // author: this.props.user.id,
-            author: localStorage.getItem('user_id'),
+            author: this.props.user._id,
             body: this.state.body,
             category: this.state.category
         }
