@@ -5,9 +5,10 @@ import './App.css'
 
 // redux
 import { Provider } from 'react-redux'
-import store from './store'
+// import store from './store'
 import { getUser } from './actions/authActions'
 import { clearErrors } from './actions/errorActions'
+import { PersistGate } from 'redux-persist/integration/react'
 
 //Components
 import NavBar from './components/NavBar'
@@ -16,6 +17,9 @@ import Home from './components/Home'
 import LogIn from './components/LogIn'
 import NotFound from './components/NotFound'
 import Footer from './components/Footer'
+
+import { configureStore } from './store'
+const { store, persistor } = configureStore()
 
 class App extends Component {
 
@@ -38,18 +42,20 @@ class App extends Component {
 
     return (
       <Provider store={store}>
-        <div className="App">
-          <BrowserRouter>
-            <NavBar />
-            <Switch>
-              <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
-              <Route path='/blog' component={Blog} />
-              <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
-              <Route component={NotFound} />
-            </Switch>
-            <Footer />
-          </BrowserRouter>
-        </div>
+        <PersistGate loading={null} persistor={persistor}>
+          <div className="App">
+            <BrowserRouter>
+              <NavBar />
+              <Switch>
+                <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
+                <Route path='/blog' component={Blog} />
+                <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
+                <Route component={NotFound} />
+              </Switch>
+              <Footer />
+            </BrowserRouter>
+          </div>
+        </PersistGate>
       </Provider>
     )
   }

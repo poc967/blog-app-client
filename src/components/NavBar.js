@@ -22,8 +22,6 @@ class NavBar extends Component {
 
     render() {
 
-        const user = localStorage.getItem('user_id')
-
         return (
             <div>
                 <Navbar color="dark" dark expand="md">
@@ -38,7 +36,7 @@ class NavBar extends Component {
                                     <NavLink href='/blog'>Blog</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    {user ? (<NavLink href="#" onClick={this.props.destroySession}>Logout</NavLink>) : (<NavLink href='/users/login'>Log In</NavLink>)}
+                                    {this.props.isAuthenticated ? (<NavLink href="#" onClick={this.props.destroySession}>Logout</NavLink>) : (<NavLink href='/users/login'>Log In</NavLink>)}
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href='http://github.com/poc967/blog-app-client'>

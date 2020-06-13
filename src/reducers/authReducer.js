@@ -15,7 +15,7 @@ const initialState = {
     user: null
 }
 
-export default function (state = initialState, action) {
+const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_LOADING:
             return {
@@ -23,29 +23,15 @@ export default function (state = initialState, action) {
                 loading: true
             }
         case USER_LOADED:
-            localStorage.setItem('user_id', action.payload._id)
-            localStorage.setItem('isAuthenticated', true)
             return {
-                ...state,
                 loading: false,
                 isAuthenticated: true,
-                user: {
-                    id: action.payload._id,
-                    email: action.payload.email,
-                    firstName: action.payload.firstName
-                }
+                user: action.payload
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            localStorage.setItem('user_id', action.payload._id)
-            localStorage.setItem('isAuthenticated', true)
             return {
-                ...state,
-                user: {
-                    id: action.payload._id,
-                    email: action.payload.email,
-                    firstName: action.payload.firstName
-                },
+                user: action.payload,
                 isAuthenticated: true,
                 loading: false
             }
@@ -53,17 +39,14 @@ export default function (state = initialState, action) {
         case REGISTER_FAIL:
         case LOGOUT_SUCCESS:
         case AUTH_ERROR:
-            localStorage.removeItem('user_id')
-            localStorage.setItem('isAuthenticated', false)
             return {
-                ...state,
                 isAuthenticated: false,
                 loading: false,
                 user: null
             }
         default:
-            return {
-                state
-            }
+            return state
     }
 }
+
+export default authReducer

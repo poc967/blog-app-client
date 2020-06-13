@@ -13,7 +13,6 @@ import { getPosts, deletePost } from '../actions/postActions'
 
 // helpers
 import { calcDate, pillColor, borderColor } from '../utils/helperFunctions'
-import { Redirect } from 'react-router-dom';
 
 // styles
 const cardStyle = {
@@ -37,8 +36,7 @@ const spinnerStyle = {
 class Blog extends Component {
     state = {
         selectedOptions: [],
-        isOpen: false,
-        user: null
+        isOpen: false
     }
 
     addSelectedOptions = (selectedOptions) => {
@@ -52,23 +50,11 @@ class Blog extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.user !== prevProps.user) {
-            if (this.props.user) {
-                const { _id } = this.props.user
 
-                this.setState({ user: _id })
-            } else {
-                this.setState({ user: null })
-            }
-        }
     }
 
     onDeleteClick = (id) => {
         this.props.deletePost(id)
-    }
-
-    handleOpen = () => {
-
     }
 
     render() {
@@ -76,6 +62,15 @@ class Blog extends Component {
         const { posts, loading } = this.props.post
         const options = this.state.selectedOptions === null ? [] : this.state.selectedOptions.map(option => option.value)
         const filteredPosts = (this.state.selectedOptions === null || this.state.selectedOptions.length === 0) ? posts : posts.filter(post => options.includes(post.category))
+
+        const removeButton = (
+            <Button color="danger"
+                outline
+                className="ml-3"
+                onClick={() => this.onDeleteClick()}>
+                Remove
+            </Button >
+        )
 
         return (
             loading ? <Container style={spinnerStyle}><Spinner color="info" style={{ width: '7rem', height: '7rem' }} /></Container > :
@@ -101,10 +96,12 @@ class Blog extends Component {
                                                     <CardText>Date Created: {calcDate(createdAt)}</CardText>
                                                     <CardText style={cardBodyStyle}>{body}</CardText>
                                                     <Button color="dark" outline>See More</Button>
-                                                    <Button color="danger"
+                                                    {(this.props.user._id === author._id) ? (<Button color="danger"
                                                         outline
                                                         className="ml-3"
-                                                        onClick={() => this.onDeleteClick(_id)}>Remove</Button>
+                                                        onClick={() => this.onDeleteClick(_id)}>
+                                                        Remove
+                                                    </Button >) : null}
                                                 </CardBody>
                                             </Card>
                                         </CSSTransition>

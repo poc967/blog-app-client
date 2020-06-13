@@ -5,11 +5,11 @@ const initialState = {
     loading: false
 }
 
-export default function (state = initialState, action) {
+const postReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_POSTS:
             return {
-                ...state,
+                // ...state,
                 posts: action.payload,
                 loading: false
             }
@@ -32,3 +32,5 @@ export default function (state = initialState, action) {
             return state
     }
 }
+
+export default postReducer
