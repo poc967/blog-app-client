@@ -16,6 +16,7 @@ import NavBar from './components/NavBar'
 import Blog from './components/Blog'
 import Home from './components/Home'
 import LogIn from './components/LogIn'
+import Profile from './components/Profile'
 import NotFound from './components/NotFound'
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
@@ -48,6 +49,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/' render={() => <Home toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
             <PrivateRoute isLoggedIn={this.props.isAuthenticated} path='/blog' component={Blog} />
+            <PrivateRoute isLoggedIn={this.props.isAuthenticated} path='/users/profile' component={Profile} />
             <Route path='/users/login' render={() => <LogIn toggleOpen={this.toggleOpen} isOpen={this.state.isOpen} />} />
             <Route component={NotFound} />
           </Switch>
@@ -58,12 +60,12 @@ class App extends Component {
   }
 }
 
-NavBar.propTypes = {
-  isAuthenticated: PropTypes.bool,
+App.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, null)(App)

@@ -48,6 +48,9 @@ class NavBar extends Component {
                                     {this.props.isAuthenticated ? (navMessage) : null}
                                 </NavItem>
                                 <NavItem>
+                                    {this.props.isAuthenticated ? (<NavLink href="/users/profile">Profile</NavLink>) : null}
+                                </NavItem>
+                                <NavItem>
                                     <NavLink href='http://github.com/poc967/blog-app-client'>
                                         <IoLogoGithub size="25px" />
                                     </NavLink>
