@@ -12,7 +12,7 @@ import {
 const initialState = {
     isAuthenticated: false,
     loading: false,
-    user: null
+    user: {}
 }
 
 const authReducer = (state = initialState, action) => {
@@ -42,7 +42,7 @@ const authReducer = (state = initialState, action) => {
             return {
                 isAuthenticated: false,
                 loading: false,
-                user: null
+                user: {}
             }
         default:
             return state
