@@ -42,7 +42,8 @@ class NavBar extends Component {
                                     <NavLink href='/blog'>Blog</NavLink>
                                 </NavItem>
                                 <NavItem>
-                                    {this.props.isAuthenticated ? (<NavLink href="#" onClick={this.props.destroySession}>Logout</NavLink>) : (<NavLink href='/users/login'>Log In</NavLink>)}
+                                    {this.props.isAuthenticated ? (<NavLink href="#" onClick={this.props.destroySession}>Logout</NavLink>) :
+                                        (<NavLink href='/users/login'>Log In</NavLink>)}
                                 </NavItem>
                                 <NavItem>
                                     {this.props.isAuthenticated ? (navMessage) : null}

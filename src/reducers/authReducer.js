@@ -23,6 +23,7 @@ const authReducer = (state = initialState, action) => {
                 loading: true
             }
         case USER_LOADED:
+            console.log(action.payload)
             return {
                 loading: false,
                 isAuthenticated: true,
@@ -30,6 +31,7 @@ const authReducer = (state = initialState, action) => {
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
+            console.log(action.payload)
             return {
                 user: action.payload,
                 isAuthenticated: true,
