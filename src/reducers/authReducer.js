@@ -6,7 +6,8 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    UPDATE_USER
 } from '../actions/types'
 
 const initialState = {
@@ -23,7 +24,7 @@ const authReducer = (state = initialState, action) => {
                 loading: true
             }
         case USER_LOADED:
-            console.log(action.payload)
+        case UPDATE_USER:
             return {
                 loading: false,
                 isAuthenticated: true,
@@ -31,7 +32,6 @@ const authReducer = (state = initialState, action) => {
             }
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            console.log(action.payload)
             return {
                 user: action.payload,
                 isAuthenticated: true,

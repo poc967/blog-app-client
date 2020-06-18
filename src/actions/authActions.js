@@ -6,7 +6,8 @@ import {
     LOGIN_FAIL,
     LOGOUT_SUCCESS,
     REGISTER_SUCCESS,
-    REGISTER_FAIL
+    REGISTER_FAIL,
+    UPDATE_USER
 } from './types'
 import axios from 'axios'
 import { returnErrors } from './errorActions'
@@ -77,6 +78,19 @@ export const destroySession = () => async (dispatch) => {
         await axios.post('/users/logout')
         dispatch({
             type: LOGOUT_SUCCESS
+        })
+    } catch (error) {
+        dispatch(returnErrors(error.response.data.message, error.response.status))
+    }
+}
+
+export const updateUser = (paramsToUpdate) => async (dispatch) => {
+    const { id, data } = paramsToUpdate
+    try {
+        const response = await axios.patch(`/users/${id}`, data)
+        dispatch({
+            type: UPDATE_USER,
+            payload: response.data
         })
     } catch (error) {
         dispatch(returnErrors(error.response.data.message, error.response.status))
