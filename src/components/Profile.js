@@ -5,7 +5,6 @@ import UpdateProfileModal from './UpdateProfileModal'
 
 // redux
 import { connect } from 'react-redux'
-import { updateUser } from '../actions/authActions'
 
 // styles
 const cardStyle = {
@@ -18,7 +17,7 @@ const cardStyle = {
 
 class Profile extends Component {
     render() {
-        const { email, firstName, lastName } = this.props.user
+        const { email, firstName, lastName, _id } = this.props.user
         const keys = Object.keys(this.props.user)
         console.log(keys)
 
@@ -44,9 +43,9 @@ class Profile extends Component {
                         <Card className="mb-3" color="dark" inverse style={{ cardStyle, borderTop: 'solid #17a2b8 5px' }}>
                             <CardBody>
                                 <CardTitle style={{ fontSize: '2rem' }}>Account Details</CardTitle>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{email}<UpdateProfileModal paramToUpdate={email} /></CardText>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{firstName}<UpdateProfileModal paramToUpdate={firstName} /></CardText>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{lastName}<UpdateProfileModal paramToUpdate={lastName} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} name="email">{email}<UpdateProfileModal paramToUpdate={'email'} id={_id} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{firstName}<UpdateProfileModal paramToUpdate={'firstName'} id={_id} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{lastName}<UpdateProfileModal paramToUpdate={'lastName'} id={_id} /></CardText>
                                 {/* <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><UpdateProfileModal paramToUpdate={password} /></CardText> */}
                             </CardBody>
                         </Card>
@@ -69,7 +68,6 @@ class Profile extends Component {
 
 Profile.propTypes = {
     user: PropTypes.object.isRequired,
-    updateUser: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({

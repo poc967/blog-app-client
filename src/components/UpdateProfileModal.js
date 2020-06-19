@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup, Input, Label, Form } from 'reactstrap'
+import { connect } from 'react-redux'
+import { updateUser } from '../actions/authActions'
+import PropTypes from 'prop-types'
 
 class UpdateProfileModal extends Component {
 
     state = {
         isOpen: false,
-        userInput: ''
+        email: '',
+        firstName: '',
+        lastName: ''
     }
 
     handleChange = (e) => {
@@ -20,28 +25,66 @@ class UpdateProfileModal extends Component {
         })
     }
 
+    handleSubmit = (e) => {
+        e.preventDefault()
+
+        let payload
+
+        if (this.state.email) {
+            payload = {
+                id: this.props.id,
+                data: {
+                    email: this.state.email
+                }
+            }
+        }
+
+        if (this.state.firstName) {
+            payload = {
+                id: this.props.id,
+                data: { firstName: this.state.firstName }
+            }
+        }
+
+        if (this.state.lastName) {
+            payload = {
+                id: this.props.id,
+                data: { lastName: this.state.lastName }
+            }
+        }
+
+        this.props.updateUser(payload)
+    }
+
     render() {
         return (
             <div>
-                <Button color="danger" outline onClick={this.toggleOpen}>Button</Button>
+                <Button color="danger" outline onClick={this.toggleOpen}>Update</Button>
                 <Modal isOpen={this.state.isOpen} toggle={this.toggleOpen} backdrop={false} className="bg-dark">
-                    <ModalHeader className="bg-dark text-light" toggle={this.toggleOpen}>Modal title</ModalHeader>
-                    <ModalBody className="bg-dark text-light">
-                        <Form>
+                    <ModalBody>
+                        <Form onSubmit={this.handleSubmit}>
                             <FormGroup>
-                                <Label></Label>
-                                <Input></Input>
+                                <Label>Update data</Label>
+                                <Input
+                                    required
+                                    type={this.props.paramToUpdate === 'email' ? 'email' : 'text'}
+                                    name={this.props.paramToUpdate}
+                                    onChange={this.handleChange} />
                             </FormGroup>
+                            <ModalFooter>
+                                <Button color="primary" type="submit">Update</Button>
+                                <Button color="secondary" onClick={this.toggleOpen}>Cancel</Button>
+                            </ModalFooter>
                         </Form>
                     </ModalBody>
-                    <ModalFooter className="bg-dark text-light">
-                        <Button color="primary">Do Something</Button>{' '}
-                        <Button color="secondary" onClick={this.toggleOpen}>Cancel</Button>
-                    </ModalFooter>
                 </Modal>
             </div>
         )
     }
 }
 
-export default UpdateProfileModal
+UpdateProfileModal.propTypes = ({
+    updateUser: PropTypes.func.isRequired
+})
+
+export default connect(null, { updateUser })(UpdateProfileModal)

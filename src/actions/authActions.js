@@ -84,8 +84,8 @@ export const destroySession = () => async (dispatch) => {
     }
 }
 
-export const updateUser = (paramsToUpdate) => async (dispatch) => {
-    const { id, data } = paramsToUpdate
+export const updateUser = (payload) => async (dispatch) => {
+    const { id, data } = payload
     try {
         const response = await axios.patch(`/users/${id}`, data)
         dispatch({
