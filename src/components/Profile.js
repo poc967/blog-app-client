@@ -11,13 +11,12 @@ const cardStyle = {
     boxShadow: '0 .5rem 1rem rgba(0,0,0,.9)',
     borderRadius: '0',
     border: '0',
-    display: 'flex',
-    maxHeight: '100vh'
+    display: 'flex'
 }
 
 class Profile extends Component {
     render() {
-        const { email, firstName, lastName, _id } = this.props.user
+        const { email, firstName, lastName, _id, about } = this.props.user
         const keys = Object.keys(this.props.user)
         console.log(keys)
 
@@ -32,8 +31,8 @@ class Profile extends Component {
                             </div>
                             <CardBody>
                                 <CardTitle style={{ fontSize: '2rem' }}>{`${firstName} ${lastName}`}</CardTitle>
-                                <CardText>About me: Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-                                <Button>Button</Button>
+                                <CardText>About me: <br /> {about}</CardText>
+                                <UpdateProfileModal paramToUpdate={'about'} id={_id} type={'textarea'} input={about} />
                             </CardBody>
                         </Card>
                     </Col>
@@ -43,10 +42,10 @@ class Profile extends Component {
                         <Card className="mb-3" color="dark" inverse style={{ cardStyle, borderTop: 'solid #17a2b8 5px' }}>
                             <CardBody>
                                 <CardTitle style={{ fontSize: '2rem' }}>Account Details</CardTitle>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} name="email">{email}<UpdateProfileModal paramToUpdate={'email'} id={_id} /></CardText>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{firstName}<UpdateProfileModal paramToUpdate={'firstName'} id={_id} /></CardText>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{lastName}<UpdateProfileModal paramToUpdate={'lastName'} id={_id} /></CardText>
-                                {/* <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><UpdateProfileModal paramToUpdate={password} /></CardText> */}
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} name="email">{email}<UpdateProfileModal paramToUpdate={'email'} id={_id} type={'email'} input={email} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{firstName}<UpdateProfileModal paramToUpdate={'firstName'} id={_id} type={'text'} input={firstName} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{lastName}<UpdateProfileModal paramToUpdate={'lastName'} id={_id} type={'text'} input={lastName} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><UpdateProfileModal paramToUpdate={'password'} id={_id} type={'password'} /></CardText>
                             </CardBody>
                         </Card>
                     </Col>
