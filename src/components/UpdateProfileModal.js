@@ -72,7 +72,11 @@ class UpdateProfileModal extends Component {
                 return null
         }
 
-        this.props.updateUser(payload)
+        if (this.props.paramToUpdate === 'password' && (!confirmPassword(this.state.password, this.state.confirmPassword) || !passwordStrength(this.state.password))) {
+            return console.log('password does not satisfy requirements')
+        } else {
+            this.props.updateUser(payload)
+        }
     }
 
     valueHandler = (value) => {

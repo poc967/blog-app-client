@@ -45,7 +45,7 @@ class Profile extends Component {
                                 <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} name="email">{email}<UpdateProfileModal paramToUpdate={'email'} id={_id} type={'email'} input={email} /></CardText>
                                 <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{firstName}<UpdateProfileModal paramToUpdate={'firstName'} id={_id} type={'text'} input={firstName} /></CardText>
                                 <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>{lastName}<UpdateProfileModal paramToUpdate={'lastName'} id={_id} type={'text'} input={lastName} /></CardText>
-                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}><UpdateProfileModal paramToUpdate={'password'} id={_id} type={'password'} /></CardText>
+                                <CardText style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>Password<UpdateProfileModal paramToUpdate={'password'} id={_id} type={'password'} /></CardText>
                             </CardBody>
                         </Card>
                     </Col>
