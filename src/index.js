@@ -1,15 +1,15 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AOS from 'aos';
-import 'aos/dist/aos.css'
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
 // redux
-import { Provider } from 'react-redux'
-import { configureStore } from './store'
-import { PersistGate } from 'redux-persist/integration/react'
-const { store, persistor } = configureStore()
+import { Provider } from "react-redux";
+import { configureStore } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+const { store, persistor } = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,7 +17,7 @@ ReactDOM.render(
       <App />
     </PersistGate>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
