@@ -12,10 +12,12 @@ import {
 } from "reactstrap";
 import SignUp from "./SignUp";
 import PropTypes from "prop-types";
+import { Redirect } from 'react-router-dom';
 
 // redux
 import { connect } from "react-redux";
 import { authenticateUser } from "../actions/authActions";
+import { clearErrors } from "../actions/errorActions";
 
 const style = {
   minHeight: "100vh",
@@ -26,9 +28,11 @@ class LogIn extends Component {
     email: "",
     password: "",
     message: null,
+    isOpen: false
   };
 
   componentDidUpdate = (prevProps) => {
+    console.log(prevProps);
     const { error } = this.props;
     if (error !== prevProps.error) {
       if (error.id === "LOGIN_FAIL") {
@@ -43,6 +47,14 @@ class LogIn extends Component {
     }
   };
 
+
+   toggleOpen = (e) => {
+    this.props.clearErrors();
+    this.setState({
+      isOpen: !this.state.isOpen,
+    });
+  };
+
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
@@ -51,7 +63,6 @@ class LogIn extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-
     const { email, password } = this.state;
 
     const user = {
@@ -59,10 +70,16 @@ class LogIn extends Component {
       password,
     };
 
-    this.props.authenticateUser(user);
+    try {
+      this.props.authenticateUser(user)
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   render() {
+    
+    if (this.props.isAuthenticated) return <Redirect to='/blog' />
     return (
       <div style={style}>
         <Container className="mt-5">
@@ -102,13 +119,13 @@ class LogIn extends Component {
                 <Col xs="auto">
                   <span>
                     Not a member already?
-                    <Button color="link" onClick={this.props.toggleOpen}>
+                    <Button color="link" onClick={this.toggleOpen}>
                       Sign Up
                     </Button>
                   </span>
                   <SignUp
-                    isOpen={this.props.isOpen}
-                    toggleOpen={this.props.toggleOpen}
+                    isOpen={this.state.isOpen}
+                    toggleOpen={this.toggleOpen}
                   />
                 </Col>
               </Row>
@@ -122,10 +139,13 @@ class LogIn extends Component {
 
 LogIn.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   error: state.error,
+  isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { authenticateUser })(LogIn);
+export default connect(mapStateToProps, { authenticateUser, clearErrors })(LogIn);

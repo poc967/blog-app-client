@@ -4,19 +4,17 @@ import {
   Navbar,
   NavbarToggler,
   Nav,
-  NavLink,
   NavItem,
   Container,
 } from "reactstrap";
+import { Link } from "react-router-dom";
+
 import { IoLogoGithub } from "react-icons/io";
 import { PropTypes } from "prop-types";
 
 // redux
 import { connect } from "react-redux";
 import { destroySession } from "../actions/authActions";
-
-// components
-import NavMessage from "./NavMessage";
 
 class NavBar extends Component {
   state = {
@@ -30,9 +28,6 @@ class NavBar extends Component {
   };
 
   render() {
-    console.log("rendering navbar", this.props);
-
-    // const navMessage = <NavMessage firstName={this.props.user.firstName} />;
 
     return (
       <div>
@@ -42,36 +37,34 @@ class NavBar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/">Home</NavLink>
+                  <Link to="/">Home</Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/blog">Blog</NavLink>
+                  <Link to="/blog">Blog</Link>
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <NavLink href="#" onClick={this.props.destroySession}>
+                    <Link to="#" onClick={this.props.destroySession}>
                       Logout
-                    </NavLink>
+                    </Link>
                   ) : (
-                    <NavLink href="/users/login">Log In</NavLink>
+                    <Link to="/users/login">Log In</Link>
                   )}
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <NavLink href="#">
-                      Welcome {this.props.user.firstName}
-                    </NavLink>
+                    <Link to="#">Welcome {this.props.user.firstName}</Link>
                   ) : null}
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <NavLink href="/users/profile">Profile</NavLink>
+                    <Link to="/users/profile">Profile</Link>
                   ) : null}
                 </NavItem>
                 <NavItem>
-                  <NavLink href="http://github.com/poc967/blog-app-client">
+                  <Link to="http://github.com/poc967/blog-app-client">
                     <IoLogoGithub size="25px" />
-                  </NavLink>
+                  </Link>
                 </NavItem>
               </Nav>
             </Collapse>

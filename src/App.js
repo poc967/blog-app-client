@@ -1,16 +1,14 @@
 // misc
 import React, { Component } from "react";
-import { BrowserRouter, Switch, Link } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import PropTypes from "prop-types";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 // redux
 import { getUser } from "./actions/authActions";
-import { clearErrors } from "./actions/errorActions";
 import { connect } from "react-redux";
 import { configureStore } from "./store";
-// import store from "./store";
 
 // components
 import NavBar from "./components/NavBar";
@@ -29,24 +27,13 @@ class App extends Component {
     store.dispatch(getUser());
   }
 
-  state = {
-    isOpen: false,
-  };
-
-  toggleOpen = (e) => {
-    store.dispatch(clearErrors());
-    this.setState({
-      isOpen: !this.state.isOpen,
-    });
-  };
-
   render() {
     return (
       <div className="App">
         <BrowserRouter>
           <NavBar />
           <Switch>
-            <Link exact path="/" component={Home} />
+            <Route exact path="/" component={Home} />
             <PrivateRoute
               isLoggedIn={this.props.isAuthenticated}
               path="/blog"
@@ -57,8 +44,8 @@ class App extends Component {
               path="/users/profile"
               component={Profile}
             />
-            <Link path="/users/login" component={LogIn} />
-            <Link component={NotFound} />
+            <Route path="/users/login" component={LogIn} />
+            <Route component={NotFound} />
           </Switch>
           <Footer />
         </BrowserRouter>
