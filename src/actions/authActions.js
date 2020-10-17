@@ -14,7 +14,6 @@ import { returnErrors } from "./errorActions";
 import { clearPosts, deleteAllPostsByUser } from "./postActions";
 
 export const getUser = () => async (dispatch, getState) => {
-  console.log("getting user from token");
   dispatch(setUserLoading());
 
   try {
@@ -70,7 +69,6 @@ export const registerUser = (newUser) => async (dispatch) => {
 
   try {
     const response = await axios.post("/users", body);
-    console.log(response);
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
