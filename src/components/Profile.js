@@ -4,10 +4,8 @@ import {
   Row,
   Card,
   Button,
-  CardImg,
   CardBody,
   CardTitle,
-  CardSubtitle,
   CardText,
 } from "reactstrap";
 import { Switch } from "antd";
