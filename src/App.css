@@ -53,3 +53,7 @@
   color: white;
   transition: 500ms ease-out;
 }
+
+.popover {
+  display: flex;
+}

@@ -18,6 +18,7 @@ import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
+import SearchResultsPage from "./components/SearchResultsPage";
 import { PrivateRoute } from "./components/PrivateRoute";
 
 const { store } = configureStore();
@@ -27,11 +28,41 @@ class App extends Component {
     store.dispatch(getUser());
   }
 
+  // search bar state management
+
+  state = {
+    search: "",
+    results: [],
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+    this.findUsers(e.target.value);
+  };
+
+  findUsers = (search) => {
+    // dispatch action to find users using state search value
+    // add these to component state and pass to popover results component
+    console.log(search);
+  };
+
+  handleSubmit = (e) => {
+    console.log(e);
+  };
+
+  // ----------------------------
+
   render() {
     return (
       <div className="App">
         <BrowserRouter>
-          <NavBar />
+          <NavBar
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            doesSearchBarHaveContents={this.state.search}
+          />
           <Switch>
             <Route exact path="/" component={Home} />
             <PrivateRoute
@@ -43,6 +74,11 @@ class App extends Component {
               isLoggedIn={this.props.isAuthenticated}
               path="/users/profile"
               component={Profile}
+            />
+            <PrivateRoute
+              isLoggedIn={this.props.isAuthenticated}
+              path="/search-results"
+              render={<SearchResultsPage search={this.state.search} />}
             />
             <Route path="/users/login" component={LogIn} />
             <Route component={NotFound} />

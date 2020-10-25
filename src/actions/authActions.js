@@ -100,8 +100,6 @@ export const destroySession = () => async (dispatch) => {
 };
 
 export const deleteUser = (payload) => async (dispatch) => {
-  console.log(payload);
-
   try {
     await axios.delete(`/users/${payload}`);
     dispatch(deleteAllPostsByUser(payload));
@@ -112,6 +110,7 @@ export const deleteUser = (payload) => async (dispatch) => {
 };
 
 export const updateUser = (payload) => async (dispatch) => {
+  dispatch(setUserLoading());
   const { id, data } = payload;
   try {
     const response = await axios.patch(`/users/${id}`, data);
@@ -123,3 +122,6 @@ export const updateUser = (payload) => async (dispatch) => {
     dispatch(returnErrors(error.response.data.message, error.response.status));
   }
 };
+
+// export const searchUsers = payload
+// have to add endpoint for returning users
