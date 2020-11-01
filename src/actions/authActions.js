@@ -122,6 +122,3 @@ export const updateUser = (payload) => async (dispatch) => {
     dispatch(returnErrors(error.response.data.message, error.response.status));
   }
 };
-
-// export const searchUsers = payload
-// have to add endpoint for returning users

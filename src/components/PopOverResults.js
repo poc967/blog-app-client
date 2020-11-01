@@ -12,18 +12,28 @@ class PopOverResults extends Component {
           style={{ width: "35vw" }}
         >
           <PopoverBody>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-                width: "100%",
-              }}
-            >
-              <span>Jim Halpert</span>
-              <Button>Add</Button>
-            </div>
+            {this.props.searchResults.data ? (
+              this.props.searchResults.data.map(
+                ({ _id, firstName, lastName }) => (
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      marginBottom: "1rem",
+                    }}
+                    key={_id}
+                  >
+                    <span>{`${firstName} ${lastName}`}</span>
+                    <Button>Add</Button>
+                  </div>
+                )
+              )
+            ) : (
+              <span>No results found</span>
+            )}
           </PopoverBody>
         </Popover>
       </div>
