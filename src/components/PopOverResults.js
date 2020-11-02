@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { Popover, PopoverBody, Button } from "reactstrap";
+import { Popover, PopoverBody, Button, Spinner } from "reactstrap";
+import axios from "axios";
 
 class PopOverResults extends Component {
+  handleSubmit = async (id) => {
+    await axios.post(`/users/add_followers/${this.props.currentUser._id}`, {
+      userToFollow: id,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -12,9 +19,9 @@ class PopOverResults extends Component {
           style={{ width: "35vw" }}
         >
           <PopoverBody>
-            {this.props.searchResults.data ? (
-              this.props.searchResults.data.map(
-                ({ _id, firstName, lastName }) => (
+            {!this.props.isLoading ? (
+              this.props.searchResults.length !== 0 ? (
+                this.props.searchResults.map(({ _id, firstName, lastName }) => (
                   <div
                     style={{
                       display: "flex",
@@ -27,12 +34,16 @@ class PopOverResults extends Component {
                     key={_id}
                   >
                     <span>{`${firstName} ${lastName}`}</span>
-                    <Button>Add</Button>
+                    <Button onClick={() => this.handleSubmit(_id)}>Add</Button>
                   </div>
-                )
+                ))
+              ) : (
+                <span>No results found</span>
               )
             ) : (
-              <span>No results found</span>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Spinner style={{ testAlign: "center" }} />
+              </div>
             )}
           </PopoverBody>
         </Popover>

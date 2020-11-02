@@ -15,18 +15,21 @@ class SearchBar extends Component {
   handleChange = (e) => {
     this.setState({
       [e.target.name]: e.target.value,
+      loading: true,
     });
     this.findUsers(e.target.value);
   };
 
   findUsers = async (firstName) => {
-    try {
-      const results = await axios.post("/users/search", { firstName });
+    const results = await axios.post("/users/search", { firstName });
+    if (results) {
       this.setState({
-        results,
+        results: results.data,
+        loading: false,
       });
-    } catch (error) {
-      throw new Error(error);
+      console.log(results.data);
+    } else {
+      throw new Error("err");
     }
   };
 
@@ -63,6 +66,8 @@ class SearchBar extends Component {
             <PopOverResults
               doesSearchBarHaveContents={this.state.search}
               searchResults={this.state.results}
+              isLoading={this.state.loading}
+              currentUser={this.props.currentUser}
             />
           </Form>
         </div>

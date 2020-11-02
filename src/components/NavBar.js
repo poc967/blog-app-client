@@ -36,7 +36,9 @@ class NavBar extends Component {
           <Container>
             <NavbarToggler onClick={this.toggleOpen} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              {this.props.isAuthenticated ? <SearchBar /> : null}
+              {this.props.isAuthenticated ? (
+                <SearchBar currentUser={this.props.user} />
+              ) : null}
               <Nav
                 className="ml-auto"
                 navbar
