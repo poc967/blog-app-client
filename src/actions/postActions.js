@@ -7,10 +7,9 @@ import {
 } from "./types";
 import axios from "axios";
 
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (payload) => async (dispatch) => {
   dispatch(setPostsLoading());
-  const response = await axios.get("/posts");
-
+  const response = await axios.get(`/posts`);
   dispatch({
     type: GET_POSTS,
     payload: response.data,

@@ -18,7 +18,6 @@ import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import Footer from "./components/Footer";
-import SearchResultsPage from "./components/SearchResultsPage";
 import { PrivateRoute } from "./components/PrivateRoute";
 
 const { store } = configureStore();

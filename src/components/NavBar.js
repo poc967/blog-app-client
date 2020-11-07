@@ -42,7 +42,6 @@ class NavBar extends Component {
               <Nav
                 className="ml-auto"
                 navbar
-                color
                 style={{
                   width: "40vw",
                   display: "flex",

@@ -58,7 +58,7 @@ class Blog extends Component {
   };
 
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getPosts(this.props.user.followedAccounts);
   }
 
   componentDidUpdate(prevProps) {}

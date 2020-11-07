@@ -8,6 +8,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   UPDATE_USER,
+  ADD_FOLLOWER,
 } from "./types";
 import axios from "axios";
 import { returnErrors } from "./errorActions";
@@ -49,6 +50,7 @@ export const authenticateUser = ({ email, password }) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
+    console.log(error);
     dispatch({
       type: LOGIN_FAIL,
     });
@@ -120,5 +122,21 @@ export const updateUser = (payload) => async (dispatch) => {
     });
   } catch (error) {
     dispatch(returnErrors(error.response.data.message, error.response.status));
+  }
+};
+
+export const addFollower = (payload) => async (dispatch) => {
+  dispatch(setUserLoading());
+  const { currentUser, userToFollow } = payload;
+  try {
+    const response = await axios.post(`users/add_followers/${currentUser}`, {
+      userToFollow,
+    });
+    dispatch({
+      type: ADD_FOLLOWER,
+      payload: response.data.user,
+    });
+  } catch (error) {
+    dispatch(returnErrors(error));
   }
 };

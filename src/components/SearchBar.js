@@ -22,12 +22,12 @@ class SearchBar extends Component {
 
   findUsers = async (firstName) => {
     const results = await axios.post("/users/search", { firstName });
+    console.log(results);
     if (results) {
       this.setState({
         results: results.data,
         loading: false,
       });
-      console.log(results.data);
     } else {
       throw new Error("err");
     }

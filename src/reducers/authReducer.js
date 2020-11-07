@@ -8,6 +8,7 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   UPDATE_USER,
+  ADD_FOLLOWER,
 } from "../actions/types";
 
 const initialState = {
@@ -25,6 +26,7 @@ const authReducer = (state = initialState, action) => {
       };
     case USER_LOADED:
     case UPDATE_USER:
+    case ADD_FOLLOWER:
       return {
         loading: false,
         isAuthenticated: true,
