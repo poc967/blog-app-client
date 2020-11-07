@@ -12,7 +12,7 @@ import {
 } from "reactstrap";
 import SignUp from "./SignUp";
 import PropTypes from "prop-types";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
 // redux
 import { connect } from "react-redux";
@@ -28,11 +28,10 @@ class LogIn extends Component {
     email: "",
     password: "",
     message: null,
-    isOpen: false
+    isOpen: false,
   };
 
   componentDidUpdate = (prevProps) => {
-    console.log(prevProps);
     const { error } = this.props;
     if (error !== prevProps.error) {
       if (error.id === "LOGIN_FAIL") {
@@ -47,8 +46,7 @@ class LogIn extends Component {
     }
   };
 
-
-   toggleOpen = (e) => {
+  toggleOpen = (e) => {
     this.props.clearErrors();
     this.setState({
       isOpen: !this.state.isOpen,
@@ -71,15 +69,14 @@ class LogIn extends Component {
     };
 
     try {
-      this.props.authenticateUser(user)
+      this.props.authenticateUser(user);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   };
 
   render() {
-    
-    if (this.props.isAuthenticated) return <Redirect to='/blog' />
+    if (this.props.isAuthenticated) return <Redirect to="/blog" />;
     return (
       <div style={style}>
         <Container className="mt-5">
@@ -140,12 +137,14 @@ class LogIn extends Component {
 LogIn.propTypes = {
   authenticateUser: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
-  clearErrors: PropTypes.func.isRequired
+  clearErrors: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   error: state.error,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
-export default connect(mapStateToProps, { authenticateUser, clearErrors })(LogIn);
+export default connect(mapStateToProps, { authenticateUser, clearErrors })(
+  LogIn
+);

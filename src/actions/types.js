@@ -14,3 +14,4 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 export const UPDATE_USER = "UPDATE_USER";
 export const CLEAR_POSTS = "CLEAR_POSTS";
+export const ADD_FOLLOWER = "ADD_FOLLOWER";

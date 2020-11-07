@@ -58,7 +58,7 @@ class Blog extends Component {
   };
 
   componentDidMount() {
-    this.props.getPosts();
+    this.props.getPosts(this.props.user.followedAccounts);
   }
 
   componentDidUpdate(prevProps) {}
@@ -69,7 +69,6 @@ class Blog extends Component {
 
   render() {
     const { posts, loading } = this.props.post;
-    console.log(posts);
     const options =
       this.state.selectedOptions === null
         ? []

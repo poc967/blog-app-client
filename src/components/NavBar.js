@@ -16,6 +16,8 @@ import { PropTypes } from "prop-types";
 import { connect } from "react-redux";
 import { destroySession } from "../actions/authActions";
 
+import SearchBar from "./SearchBar";
+
 class NavBar extends Component {
   state = {
     isOpen: false,
@@ -28,41 +30,68 @@ class NavBar extends Component {
   };
 
   render() {
-
     return (
       <div>
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="dark" dark expand="md" style={{ minHeight: "70px" }}>
           <Container>
             <NavbarToggler onClick={this.toggleOpen} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="ml-auto" navbar>
+              {this.props.isAuthenticated ? (
+                <SearchBar currentUser={this.props.user} />
+              ) : null}
+              <Nav
+                className="ml-auto"
+                navbar
+                style={{
+                  width: "40vw",
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                }}
+              >
                 <NavItem>
-                  <Link to="/">Home</Link>
+                  <Link to="/" style={{ color: "grey" }}>
+                    Home
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/blog">Blog</Link>
+                  <Link to="/blog" style={{ color: "grey" }}>
+                    Blog
+                  </Link>
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <Link to="#" onClick={this.props.destroySession}>
+                    <Link
+                      to="#"
+                      style={{ color: "grey" }}
+                      onClick={this.props.destroySession}
+                    >
                       Logout
                     </Link>
                   ) : (
-                    <Link to="/users/login">Log In</Link>
+                    <Link to="/users/login" style={{ color: "grey" }}>
+                      Log In
+                    </Link>
                   )}
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <Link to="#">Welcome {this.props.user.firstName}</Link>
+                    <Link to="#" style={{ color: "grey" }}>
+                      Welcome {this.props.user.firstName}
+                    </Link>
                   ) : null}
                 </NavItem>
                 <NavItem>
                   {this.props.isAuthenticated ? (
-                    <Link to="/users/profile">Profile</Link>
+                    <Link to="/users/profile" style={{ color: "grey" }}>
+                      Profile
+                    </Link>
                   ) : null}
                 </NavItem>
                 <NavItem>
-                  <Link to="http://github.com/poc967/blog-app-client">
+                  <Link
+                    to="http://github.com/poc967/blog-app-client"
+                    style={{ color: "grey" }}
+                  >
                     <IoLogoGithub size="25px" />
                   </Link>
                 </NavItem>

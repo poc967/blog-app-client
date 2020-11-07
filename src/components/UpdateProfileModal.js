@@ -116,7 +116,7 @@ class UpdateProfileModal extends Component {
     const strongPassword = passwordStrength(this.state.password);
 
     return (
-      <div>
+      <>
         <Button color="info" outline onClick={this.toggleOpen}>
           Update
         </Button>
@@ -196,7 +196,7 @@ class UpdateProfileModal extends Component {
             </Form>
           </ModalBody>
         </Modal>
-      </div>
+      </>
     );
   }
 }
