@@ -129,7 +129,7 @@ export const addFollower = (payload) => async (dispatch) => {
   dispatch(setUserLoading());
   const { currentUser, userToFollow } = payload;
   try {
-    const response = await axios.post(`users/add_followers/${currentUser}`, {
+    const response = await axios.post(`/users/add_followers/${currentUser}`, {
       userToFollow,
     });
     dispatch({
