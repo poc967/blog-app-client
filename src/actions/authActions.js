@@ -9,6 +9,7 @@ import {
   REGISTER_FAIL,
   UPDATE_USER,
   ADD_FOLLOWER,
+  REMOVE_FOLLOWER,
 } from "./types";
 import axios from "axios";
 import { returnErrors } from "./errorActions";
@@ -136,6 +137,19 @@ export const addFollower = (payload) => async (dispatch) => {
       type: ADD_FOLLOWER,
       payload: response.data.user,
     });
+  } catch (error) {
+    dispatch(returnErrors(error));
+  }
+};
+
+export const deleteFollower = (payload) => async (dispatch) => {
+  dispatch(setUserLoading());
+  const { currentUser, userToUnfollow } = payload;
+  try {
+    const response = await axios.post(`/users/del_followers/${currentUser}`, {
+      userToUnfollow,
+    });
+    dispatch({ type: REMOVE_FOLLOWER, payload: response.data.user });
   } catch (error) {
     dispatch(returnErrors(error));
   }

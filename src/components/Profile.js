@@ -13,6 +13,7 @@ import { Switch } from "antd";
 import { PropTypes } from "prop-types";
 import UpdateProfileModal from "./UpdateProfileModal";
 import { deleteUser } from "../actions/authActions";
+import { deleteFollower } from "../actions/authActions";
 
 // redux
 import { connect } from "react-redux";
@@ -38,6 +39,13 @@ class Profile extends Component {
 
   handleDelete = (id) => {
     this.props.deleteUser(id);
+  };
+
+  handleSubmit = (id) => {
+    this.props.deleteFollower({
+      currentUser: this.props.user._id,
+      userToUnfollow: id,
+    });
   };
 
   render() {
@@ -218,7 +226,11 @@ class Profile extends Component {
                         }}
                       >
                         <span>{`${firstName} ${lastName}`}</span>
-                        <Button outline color="light">
+                        <Button
+                          outline
+                          color="light"
+                          onClick={() => this.handleSubmit(_id)}
+                        >
                           Unfollow
                         </Button>
                       </div>
@@ -238,6 +250,7 @@ Profile.propTypes = {
   user: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  deleteFollower: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -245,4 +258,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { deleteUser })(Profile);
+export default connect(mapStateToProps, { deleteUser, deleteFollower })(
+  Profile
+);
