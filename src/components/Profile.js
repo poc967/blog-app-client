@@ -13,6 +13,7 @@ import { Switch } from "antd";
 import { PropTypes } from "prop-types";
 import UpdateProfileModal from "./UpdateProfileModal";
 import { deleteUser } from "../actions/authActions";
+import { deleteFollower } from "../actions/authActions";
 
 // redux
 import { connect } from "react-redux";
@@ -37,15 +38,23 @@ class Profile extends Component {
   };
 
   handleDelete = (id) => {
-    console.log(id);
     this.props.deleteUser(id);
+  };
+
+  handleSubmit = (id) => {
+    this.props.deleteFollower({
+      currentUser: this.props.user._id,
+      userToUnfollow: id,
+    });
   };
 
   render() {
     const { email, firstName, lastName, _id, about } = this.props.user;
 
     return (
-      <div style={{ height: "100vh" }}>
+      <div
+        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+      >
         <Row>
           <Col sm="12" md={{ size: 8, offset: 2 }}>
             <Card color="dark" className="mt-3 mb-3" inverse style={cardStyle}>
@@ -194,6 +203,42 @@ class Profile extends Component {
                 </div>
               </CardBody>
             </Card>
+            <Card
+              className="mb-3"
+              color="dark"
+              inverse
+              style={{ cardStyle, borderTop: "solid pink 5px" }}
+            >
+              <CardBody>
+                <CardTitle style={{ fontSize: "2rem" }}>
+                  Followed Accounts
+                </CardTitle>
+                <div>
+                  {this.props.user.followedAccounts.map(
+                    ({ _id, firstName, lastName }) => (
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "Row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: "0.5rem",
+                        }}
+                      >
+                        <span>{`${firstName} ${lastName}`}</span>
+                        <Button
+                          outline
+                          color="light"
+                          onClick={() => this.handleSubmit(_id)}
+                        >
+                          Unfollow
+                        </Button>
+                      </div>
+                    )
+                  )}
+                </div>
+              </CardBody>
+            </Card>
           </Col>
         </Row>
       </div>
@@ -205,6 +250,7 @@ Profile.propTypes = {
   user: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   deleteUser: PropTypes.func.isRequired,
+  deleteFollower: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -212,4 +258,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { deleteUser })(Profile);
+export default connect(mapStateToProps, { deleteUser, deleteFollower })(
+  Profile
+);

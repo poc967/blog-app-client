@@ -39,7 +39,9 @@ class PopOverResults extends Component {
                       key={_id}
                     >
                       <span>{`${firstName} ${lastName}`}</span>
-                      {this.props.currentUser.followedAccounts.includes(_id) ? (
+                      {this.props.currentUser.followedAccounts
+                        .map((follower) => follower._id)
+                        .includes(_id) ? (
                         <FiUserCheck
                           style={{ color: "green", marginRight: "0.8rem" }}
                           size="25px"
