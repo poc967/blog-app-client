@@ -21,6 +21,8 @@ import { clearErrors } from "../actions/errorActions";
 
 const style = {
   minHeight: "100vh",
+  backgroundColor: "white",
+  paddingTop: "2rem",
 };
 
 class LogIn extends Component {
@@ -79,7 +81,7 @@ class LogIn extends Component {
     if (this.props.isAuthenticated) return <Redirect to="/blog" />;
     return (
       <div style={style}>
-        <Container className="mt-5">
+        <Container>
           <Col sm="12" md={{ size: 6, offset: 3 }}>
             {this.state.message ? (
               <Alert color="danger">{this.state.message}</Alert>

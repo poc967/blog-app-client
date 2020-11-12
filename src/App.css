@@ -57,3 +57,7 @@
 .popover {
   display: flex;
 }
+
+body {
+  background-color: #343a40;
+}

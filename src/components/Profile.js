@@ -53,17 +53,28 @@ class Profile extends Component {
 
     return (
       <div
-        style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          backgroundColor: "white",
+        }}
       >
         <Row>
           <Col sm="12" md={{ size: 8, offset: 2 }}>
-            <Card color="dark" className="mt-3 mb-3" inverse style={cardStyle}>
+            <Card
+              color="dark"
+              className="mt-3 mb-3"
+              inverse
+              style={{ borderRadius: "0.5rem" }}
+            >
               <CardBody>
                 <CardTitle
                   style={{ fontSize: "2rem" }}
                 >{`${firstName} ${lastName}`}</CardTitle>
-                <CardText>
-                  About me: <br /> {about}
+                <hr style={{ color: "white" }} />
+                <CardText style={{ fontWeight: "200" }}>
+                  About: <br /> {about}
                 </CardText>
                 <UpdateProfileModal
                   paramToUpdate={"about"}
@@ -86,6 +97,7 @@ class Profile extends Component {
                 borderTop: "solid #17a2b8 5px",
                 minHeight: "40vh",
                 display: "flex",
+                borderRadius: "0.5rem",
               }}
             >
               {this.props.auth.loading ? (
@@ -100,7 +112,7 @@ class Profile extends Component {
                   <Spinner style={{ width: "4rem", height: "4rem" }} />
                 </div>
               ) : (
-                <CardBody>
+                <CardBody style={{ borderRadius: "0.5rem" }}>
                   <CardTitle style={{ fontSize: "2rem" }}>
                     Account Details
                   </CardTitle>
@@ -109,6 +121,7 @@ class Profile extends Component {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      fontWeight: "200",
                     }}
                     name="email"
                   >
@@ -125,6 +138,7 @@ class Profile extends Component {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      fontWeight: "200",
                     }}
                   >
                     {firstName}
@@ -140,6 +154,7 @@ class Profile extends Component {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      fontWeight: "200",
                     }}
                   >
                     {lastName}
@@ -155,6 +170,7 @@ class Profile extends Component {
                       display: "flex",
                       justifyContent: "space-between",
                       alignItems: "center",
+                      fontWeight: "200",
                     }}
                   >
                     Password
@@ -173,11 +189,11 @@ class Profile extends Component {
               className="mb-3"
               color="dark"
               inverse
-              style={{ cardStyle, borderTop: "solid #dc3545 5px" }}
+              style={{ borderTop: "solid #dc3545 5px", borderRadius: "0.5rem" }}
             >
               <CardBody>
                 <CardTitle style={{ fontSize: "2rem" }}>Delete User</CardTitle>
-                <CardText>
+                <CardText style={{ fontWeight: "200" }}>
                   Select the button below to delete this user from the system
                   <br />
                   WARNING: This cannot be undone
@@ -207,7 +223,7 @@ class Profile extends Component {
               className="mb-3"
               color="dark"
               inverse
-              style={{ cardStyle, borderTop: "solid pink 5px" }}
+              style={{ borderTop: "solid orange 5px", borderRadius: "0.5rem" }}
             >
               <CardBody>
                 <CardTitle style={{ fontSize: "2rem" }}>
@@ -225,7 +241,9 @@ class Profile extends Component {
                           marginBottom: "0.5rem",
                         }}
                       >
-                        <span>{`${firstName} ${lastName}`}</span>
+                        <span
+                          style={{ fontWeight: "200" }}
+                        >{`${firstName} ${lastName}`}</span>
                         <Button
                           outline
                           color="light"

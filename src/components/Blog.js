@@ -80,12 +80,25 @@ class Blog extends Component {
         : posts.filter((post) => options.includes(post.category));
 
     return loading ? (
-      <Container style={spinnerStyle}>
-        <Spinner color="info" style={{ width: "7rem", height: "7rem" }} />
-      </Container>
+      <div style={{ backgroundColor: "white" }}>
+        <Container style={spinnerStyle}>
+          <Spinner color="info" style={{ width: "7rem", height: "7rem" }} />
+        </Container>
+      </div>
     ) : (
-      <div>
-        <Container className="mt-3" style={{ minHeight: "100vh" }}>
+      <div
+        style={{
+          backgroundColor: "white",
+          minHeight: "100vh",
+        }}
+      >
+        <Container
+          style={{
+            minHeight: "100vh",
+            paddingTop: "1rem",
+            backgroundColor: "white",
+          }}
+        >
           <Row>
             <Col sm="auto">
               <NewPost block />
@@ -106,12 +119,11 @@ class Blog extends Component {
                 {filteredPosts.map(
                   ({ _id, title, author, body, category, createdAt }) => (
                     <CSSTransition key={_id} timeout={500} classNames="fade">
-                      <Card className="mb-5" style={cardStyle}>
-                        <CardBody
-                          style={{
-                            borderRight: `solid ${borderColor(category)} 20px`,
-                          }}
-                        >
+                      <Card
+                        className="mb-3"
+                        style={{ cardStyle, borderRadius: "0.5rem" }}
+                      >
+                        <CardBody>
                           <CardTitle
                             className="font-weight-bold"
                             style={{
@@ -127,7 +139,7 @@ class Blog extends Component {
                               {category}
                             </Badge>
                           </CardTitle>
-                          <CardText>
+                          <CardText style={{ fontWeight: "200" }}>
                             Date Created: {calcDate(createdAt)}
                           </CardText>
                           <CardText style={cardBodyStyle}>{body}</CardText>
