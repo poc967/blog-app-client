@@ -10,6 +10,7 @@ import {
   UPDATE_USER,
   ADD_FOLLOWER,
   REMOVE_FOLLOWER,
+  UPDATE_FAIL,
 } from "./types";
 import axios from "axios";
 import { returnErrors } from "./errorActions";
@@ -122,7 +123,16 @@ export const updateUser = (payload) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch(returnErrors(error.response.data.message, error.response.status));
+    dispatch({
+      type: UPDATE_FAIL,
+    });
+    const message = error.response.data.message
+      ? error.response.data.message
+      : "Email is already associated with an existing account";
+    const status = error.response.data.message
+      ? error.response.status
+      : error.response.data.code;
+    dispatch(returnErrors(message, status));
   }
 };
 
@@ -135,7 +145,7 @@ export const addFollower = (payload) => async (dispatch) => {
     });
     dispatch({
       type: ADD_FOLLOWER,
-      payload: response.data.user,
+      payload: response.data.followedAccounts,
     });
   } catch (error) {
     dispatch(returnErrors(error));
@@ -149,7 +159,11 @@ export const deleteFollower = (payload) => async (dispatch) => {
     const response = await axios.post(`/users/del_followers/${currentUser}`, {
       userToUnfollow,
     });
-    dispatch({ type: REMOVE_FOLLOWER, payload: response.data.user });
+    console.log(response.data);
+    dispatch({
+      type: REMOVE_FOLLOWER,
+      payload: response.data.followedAccounts,
+    });
   } catch (error) {
     dispatch(returnErrors(error));
   }

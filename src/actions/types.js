@@ -16,3 +16,4 @@ export const UPDATE_USER = "UPDATE_USER";
 export const CLEAR_POSTS = "CLEAR_POSTS";
 export const ADD_FOLLOWER = "ADD_FOLLOWER";
 export const REMOVE_FOLLOWER = "REMOVE_FOLLOWER";
+export const UPDATE_FAIL = "UPDATE_FAIL";

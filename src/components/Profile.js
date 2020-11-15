@@ -7,7 +7,6 @@ import {
   CardBody,
   CardTitle,
   CardText,
-  Spinner,
 } from "reactstrap";
 import { Switch } from "antd";
 import { PropTypes } from "prop-types";
@@ -43,13 +42,13 @@ class Profile extends Component {
 
   handleSubmit = (id) => {
     this.props.deleteFollower({
-      currentUser: this.props.user._id,
+      currentUser: this.props.user.id,
       userToUnfollow: id,
     });
   };
 
   render() {
-    const { email, firstName, lastName, _id, about } = this.props.user;
+    const { email, firstName, lastName, id, about } = this.props.user;
 
     return (
       <div
@@ -78,9 +77,10 @@ class Profile extends Component {
                 </CardText>
                 <UpdateProfileModal
                   paramToUpdate={"about"}
-                  id={_id}
+                  id={id}
                   type={"textarea"}
                   input={about}
+                  loading={this.props.auth.loading}
                 />
               </CardBody>
             </Card>
@@ -100,88 +100,79 @@ class Profile extends Component {
                 borderRadius: "0.5rem",
               }}
             >
-              {this.props.auth.loading ? (
-                <div
+              <CardBody style={{ borderRadius: "0.5rem" }}>
+                <CardTitle style={{ fontSize: "2rem" }}>
+                  Account Details
+                </CardTitle>
+                <CardText
                   style={{
-                    minHeight: "100%",
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "space-between",
                     alignItems: "center",
+                    fontWeight: "200",
+                  }}
+                  name="email"
+                >
+                  {email}
+                  <UpdateProfileModal
+                    paramToUpdate={"email"}
+                    id={id}
+                    type={"email"}
+                    input={email}
+                    loading={this.props.auth.loading}
+                  />
+                </CardText>
+                <CardText
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    fontWeight: "200",
                   }}
                 >
-                  <Spinner style={{ width: "4rem", height: "4rem" }} />
-                </div>
-              ) : (
-                <CardBody style={{ borderRadius: "0.5rem" }}>
-                  <CardTitle style={{ fontSize: "2rem" }}>
-                    Account Details
-                  </CardTitle>
-                  <CardText
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontWeight: "200",
-                    }}
-                    name="email"
-                  >
-                    {email}
-                    <UpdateProfileModal
-                      paramToUpdate={"email"}
-                      id={_id}
-                      type={"email"}
-                      input={email}
-                    />
-                  </CardText>
-                  <CardText
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontWeight: "200",
-                    }}
-                  >
-                    {firstName}
-                    <UpdateProfileModal
-                      paramToUpdate={"firstName"}
-                      id={_id}
-                      type={"text"}
-                      input={firstName}
-                    />
-                  </CardText>
-                  <CardText
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontWeight: "200",
-                    }}
-                  >
-                    {lastName}
-                    <UpdateProfileModal
-                      paramToUpdate={"lastName"}
-                      id={_id}
-                      type={"text"}
-                      input={lastName}
-                    />
-                  </CardText>
-                  <CardText
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      fontWeight: "200",
-                    }}
-                  >
-                    Password
-                    <UpdateProfileModal
-                      paramToUpdate={"password"}
-                      id={_id}
-                      type={"password"}
-                    />
-                  </CardText>
-                </CardBody>
-              )}
+                  {firstName}
+                  <UpdateProfileModal
+                    paramToUpdate={"firstName"}
+                    id={id}
+                    type={"text"}
+                    input={firstName}
+                    loading={this.props.auth.loading}
+                  />
+                </CardText>
+                <CardText
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    fontWeight: "200",
+                  }}
+                >
+                  {lastName}
+                  <UpdateProfileModal
+                    paramToUpdate={"lastName"}
+                    id={id}
+                    type={"text"}
+                    input={lastName}
+                    loading={this.props.auth.loading}
+                  />
+                </CardText>
+                <CardText
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    fontWeight: "200",
+                  }}
+                >
+                  Password
+                  <UpdateProfileModal
+                    paramToUpdate={"password"}
+                    id={id}
+                    type={"password"}
+                    loading={this.props.auth.loading}
+                  />
+                </CardText>
+              </CardBody>
             </Card>
           </Col>
           <Col sm="12" md={{ size: 4 }}>
@@ -211,7 +202,7 @@ class Profile extends Component {
                   {this.state.active ? (
                     <Button
                       color="danger"
-                      onClick={() => this.handleDelete(_id)}
+                      onClick={() => this.handleDelete(id)}
                     >
                       Delete
                     </Button>

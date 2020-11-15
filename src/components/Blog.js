@@ -14,6 +14,7 @@ import {
   UncontrolledCollapse,
 } from "reactstrap";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { FaRegSadTear } from "react-icons/fa";
 
 // components
 import NewPost from "./NewPost";
@@ -115,53 +116,77 @@ class Blog extends Component {
                   class="mb-3"
                 />
               </UncontrolledCollapse>
-              <TransitionGroup className="blog-posts">
-                {filteredPosts.map(
-                  ({ _id, title, author, body, category, createdAt }) => (
-                    <CSSTransition key={_id} timeout={500} classNames="fade">
-                      <Card
-                        className="mb-3"
-                        style={{ cardStyle, borderRadius: "0.5rem" }}
-                      >
-                        <CardBody>
-                          <CardTitle
-                            className="font-weight-bold"
-                            style={{
-                              cardBodyStyle,
-                              display: "flex",
-                              justifyContent: "space-between",
-                              alignItems: "center",
-                            }}
-                          >
-                            {title} ||{" "}
-                            {`${author.firstName} ${author.lastName}`}
-                            <Badge color={pillColor(category)} pill>
-                              {category}
-                            </Badge>
-                          </CardTitle>
-                          <CardText style={{ fontWeight: "200" }}>
-                            Date Created: {calcDate(createdAt)}
-                          </CardText>
-                          <CardText style={cardBodyStyle}>{body}</CardText>
-                          <Button color="dark" outline>
-                            See More
-                          </Button>
-                          {this.props.user._id === author._id ? (
-                            <Button
-                              color="danger"
-                              outline
-                              className="ml-3"
-                              onClick={() => this.onDeleteClick(_id)}
+              {filteredPosts.length === 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    minHeight: "50vh",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
+                >
+                  <FaRegSadTear size="50px" style={{ color: "firebrick" }} />
+                  <span
+                    style={{
+                      fontSize: "1.2rem",
+                      fontWeight: "200",
+                      textAlign: "center",
+                    }}
+                  >
+                    No posts to see yet. Try following others or create one of
+                    your own!
+                  </span>
+                </div>
+              ) : (
+                <TransitionGroup className="blog-posts">
+                  {filteredPosts.map(
+                    ({ _id, title, author, body, category, createdAt }) => (
+                      <CSSTransition key={_id} timeout={500} classNames="fade">
+                        <Card
+                          className="mb-3"
+                          style={{ cardStyle, borderRadius: "0.5rem" }}
+                        >
+                          <CardBody>
+                            <CardTitle
+                              className="font-weight-bold"
+                              style={{
+                                cardBodyStyle,
+                                display: "flex",
+                                justifyContent: "space-between",
+                                alignItems: "center",
+                              }}
                             >
-                              Remove
+                              {title} ||{" "}
+                              {`${author.firstName} ${author.lastName}`}
+                              <Badge color={pillColor(category)} pill>
+                                {category}
+                              </Badge>
+                            </CardTitle>
+                            <CardText style={{ fontWeight: "200" }}>
+                              Date Created: {calcDate(createdAt)}
+                            </CardText>
+                            <CardText style={cardBodyStyle}>{body}</CardText>
+                            <Button color="dark" outline>
+                              See More
                             </Button>
-                          ) : null}
-                        </CardBody>
-                      </Card>
-                    </CSSTransition>
-                  )
-                )}
-              </TransitionGroup>
+                            {this.props.user.id === author._id ? (
+                              <Button
+                                color="danger"
+                                outline
+                                className="ml-3"
+                                onClick={() => this.onDeleteClick(_id)}
+                              >
+                                Remove
+                              </Button>
+                            ) : null}
+                          </CardBody>
+                        </Card>
+                      </CSSTransition>
+                    )
+                  )}
+                </TransitionGroup>
+              )}
             </Col>
           </Row>
         </Container>

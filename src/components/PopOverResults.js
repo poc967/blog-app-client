@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 class PopOverResults extends Component {
   handleSubmit = async (id) => {
     this.props.addFollower({
-      currentUser: this.props.currentUser._id,
+      currentUser: this.props.currentUser.id,
       userToFollow: id,
     });
   };
@@ -54,7 +54,7 @@ class PopOverResults extends Component {
                         <Button>View</Button>
                       )}
                     </div>
-                    <hr />
+                    <hr style={{ margin: "3px" }} />
                   </>
                 ))
               ) : (

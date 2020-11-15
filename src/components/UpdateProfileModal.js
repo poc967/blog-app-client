@@ -9,9 +9,12 @@ import {
   Label,
   Form,
   FormFeedback,
+  Alert,
+  Spinner,
 } from "reactstrap";
 import { connect } from "react-redux";
 import { updateUser } from "../actions/authActions";
+import { clearErrors } from "../actions/errorActions";
 import PropTypes from "prop-types";
 
 // helpers
@@ -35,8 +38,15 @@ class UpdateProfileModal extends Component {
   };
 
   toggleOpen = () => {
+    this.props.clearErrors();
     this.setState({
       isOpen: !this.state.isOpen,
+      email: this.props.input,
+      firstName: this.props.input,
+      lastName: this.props.input,
+      about: this.props.input,
+      password: "",
+      confirmPassword: "",
     });
   };
 
@@ -127,6 +137,13 @@ class UpdateProfileModal extends Component {
           className="bg-dark"
         >
           <ModalBody>
+            {this.props.error.status === 11000 ? (
+              <Alert
+                color={this.props.error.status !== 200 ? "danger" : "success"}
+              >
+                {this.props.error.message}
+              </Alert>
+            ) : null}
             <Form onSubmit={this.handleSubmit}>
               {this.props.paramToUpdate === "password" ? (
                 <FormGroup>
@@ -186,9 +203,22 @@ class UpdateProfileModal extends Component {
                 </FormGroup>
               )}
               <ModalFooter>
-                <Button color="primary" type="submit">
-                  Update
-                </Button>
+                {this.props.loading ? (
+                  <div
+                    style={{
+                      color: "green",
+                      paddingRight: "1rem",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Spinner />
+                  </div>
+                ) : (
+                  <Button color="primary" type="submit">
+                    Update
+                  </Button>
+                )}
                 <Button color="secondary" onClick={this.toggleOpen}>
                   Close
                 </Button>
@@ -203,6 +233,14 @@ class UpdateProfileModal extends Component {
 
 UpdateProfileModal.propTypes = {
   updateUser: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
+  error: PropTypes.object.isRequired,
 };
 
-export default connect(null, { updateUser })(UpdateProfileModal);
+const mapStateToProps = (state) => ({
+  error: state.error,
+});
+
+export default connect(mapStateToProps, { updateUser, clearErrors })(
+  UpdateProfileModal
+);
