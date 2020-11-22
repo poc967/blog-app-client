@@ -113,10 +113,7 @@ export const registerUser = (newUser) => async (dispatch) => {
 export const destroySession = () => async (dispatch) => {
   try {
     await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users/logout`,
-      {
-        withCredentials: true,
-      }
+      `https://fathomless-thicket-94988.herokuapp.com/users/logout`
     );
     dispatch({
       type: LOGOUT_SUCCESS,

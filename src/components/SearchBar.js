@@ -25,6 +25,9 @@ class SearchBar extends Component {
       `https://fathomless-thicket-94988.herokuapp.com/users/search`,
       {
         firstName,
+      },
+      {
+        withCredentials: true,
       }
     );
     console.log(results);
