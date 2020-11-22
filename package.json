@@ -50,6 +50,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://fathomless-thicket-94988.herokuapp.com",
-  "homepage": "https://enigmatic-springs-23614.herokuapp.com/"
+  "homepage": "."
 }

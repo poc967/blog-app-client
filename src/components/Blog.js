@@ -25,7 +25,7 @@ import { connect } from "react-redux";
 import { getPosts, deletePost } from "../actions/postActions";
 
 // helpers
-import { calcDate, pillColor, borderColor } from "../utils/helperFunctions";
+import { calcDate, pillColor } from "../utils/helperFunctions";
 
 // styles
 const cardStyle = {

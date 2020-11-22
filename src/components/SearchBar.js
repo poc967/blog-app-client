@@ -21,7 +21,12 @@ class SearchBar extends Component {
   };
 
   findUsers = async (firstName) => {
-    const results = await axios.post("/users/search", { firstName });
+    const results = await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users/search`,
+      {
+        firstName,
+      }
+    );
     console.log(results);
     if (results) {
       this.setState({

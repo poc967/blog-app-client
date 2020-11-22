@@ -9,7 +9,12 @@ import axios from "axios";
 
 export const getPosts = (payload) => async (dispatch) => {
   dispatch(setPostsLoading());
-  const response = await axios.get(`/posts`);
+  const response = await axios.get(
+    `https://fathomless-thicket-94988.herokuapp.com/posts`,
+    {
+      withCredentials: true,
+    }
+  );
   dispatch({
     type: GET_POSTS,
     payload: response.data,
@@ -17,7 +22,12 @@ export const getPosts = (payload) => async (dispatch) => {
 };
 
 export const deletePost = (id) => async (dispatch) => {
-  const response = await axios.delete(`/posts/${id}`);
+  const response = await axios.delete(
+    `https://fathomless-thicket-94988.herokuapp.com/posts/${id}`,
+    {
+      withCredentials: true,
+    }
+  );
 
   dispatch({
     type: DELETE_POST,
@@ -27,14 +37,25 @@ export const deletePost = (id) => async (dispatch) => {
 
 export const deleteAllPostsByUser = (user) => async () => {
   try {
-    await axios.delete(`/posts/deleteAllPostsByUser/${user}`);
+    await axios.delete(
+      `https://fathomless-thicket-94988.herokuapp.com/posts/deleteAllPostsByUser/${user}`,
+      {
+        withCredentials: true,
+      }
+    );
   } catch (error) {
     console.log(error);
   }
 };
 
 export const addPost = (post) => async (dispatch) => {
-  const response = await axios.post("/posts", post);
+  const response = await axios.post(
+    `https://fathomless-thicket-94988.herokuapp.com/posts`,
+    post,
+    {
+      withCredentials: true,
+    }
+  );
 
   dispatch({
     type: ADD_POST,

@@ -20,12 +20,19 @@ export const getUser = () => async (dispatch, getState) => {
   dispatch(setUserLoading());
 
   try {
-    const response = await axios.get("/users", { withCredentials: true });
+    console.log(process.env.REACT_APP_base_url);
+    const response = await axios.get(
+      `https://fathomless-thicket-94988.herokuapp.com/users`,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: USER_LOADED,
       payload: response.data,
     });
   } catch (error) {
+    dispatch(clearPosts());
     if (error.response) {
       dispatch(
         returnErrors(error.response.data.message, error.response.status)
@@ -46,7 +53,13 @@ export const setUserLoading = () => {
 export const authenticateUser = ({ email, password }) => async (dispatch) => {
   const body = { email, password };
   try {
-    const response = await axios.post("/users/login", body);
+    const response = await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users/login`,
+      body,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -72,7 +85,13 @@ export const registerUser = (newUser) => async (dispatch) => {
   const body = { firstName, lastName, email, password };
 
   try {
-    const response = await axios.post("/users", body);
+    const response = await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users`,
+      body,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: REGISTER_SUCCESS,
       payload: response.data,
@@ -93,7 +112,12 @@ export const registerUser = (newUser) => async (dispatch) => {
 
 export const destroySession = () => async (dispatch) => {
   try {
-    await axios.post("/users/logout");
+    await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users/logout`,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: LOGOUT_SUCCESS,
     });
@@ -105,7 +129,12 @@ export const destroySession = () => async (dispatch) => {
 
 export const deleteUser = (payload) => async (dispatch) => {
   try {
-    await axios.delete(`/users/${payload}`);
+    await axios.delete(
+      `https://fathomless-thicket-94988.herokuapp.com/users/${payload}`,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch(deleteAllPostsByUser(payload));
     dispatch(destroySession());
   } catch (error) {
@@ -117,7 +146,13 @@ export const updateUser = (payload) => async (dispatch) => {
   dispatch(setUserLoading());
   const { id, data } = payload;
   try {
-    const response = await axios.patch(`/users/${id}`, data);
+    const response = await axios.patch(
+      `https://fathomless-thicket-94988.herokuapp.com/users/${id}`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: UPDATE_USER,
       payload: response.data,
@@ -140,9 +175,15 @@ export const addFollower = (payload) => async (dispatch) => {
   dispatch(setUserLoading());
   const { currentUser, userToFollow } = payload;
   try {
-    const response = await axios.post(`/users/add_followers/${currentUser}`, {
-      userToFollow,
-    });
+    const response = await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users/add_followers/${currentUser}`,
+      {
+        userToFollow,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     dispatch({
       type: ADD_FOLLOWER,
       payload: response.data.followedAccounts,
@@ -156,9 +197,15 @@ export const deleteFollower = (payload) => async (dispatch) => {
   dispatch(setUserLoading());
   const { currentUser, userToUnfollow } = payload;
   try {
-    const response = await axios.post(`/users/del_followers/${currentUser}`, {
-      userToUnfollow,
-    });
+    const response = await axios.post(
+      `https://fathomless-thicket-94988.herokuapp.com/users/del_followers/${currentUser}`,
+      {
+        userToUnfollow,
+      },
+      {
+        withCredentials: true,
+      }
+    );
     console.log(response.data);
     dispatch({
       type: REMOVE_FOLLOWER,
