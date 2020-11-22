@@ -20,7 +20,6 @@ export const getUser = () => async (dispatch, getState) => {
   dispatch(setUserLoading());
 
   try {
-    console.log(process.env.REACT_APP_base_url);
     const response = await axios.get(
       `https://fathomless-thicket-94988.herokuapp.com/users`,
       {
@@ -112,7 +111,7 @@ export const registerUser = (newUser) => async (dispatch) => {
 
 export const destroySession = () => async (dispatch) => {
   try {
-    await axios.post(
+    await axios.get(
       `https://fathomless-thicket-94988.herokuapp.com/users/logout`,
       {
         withCredentials: true,
