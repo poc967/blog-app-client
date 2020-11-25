@@ -222,7 +222,7 @@ class Profile extends Component {
                 </CardTitle>
                 <div>
                   {this.props.user.followedAccounts.map(
-                    ({ _id, firstName, lastName }) => (
+                    ({ _id, firstName, lastName }, index) => (
                       <div
                         style={{
                           display: "flex",
@@ -231,6 +231,7 @@ class Profile extends Component {
                           alignItems: "center",
                           marginBottom: "0.5rem",
                         }}
+                        key={index}
                       >
                         <span
                           style={{ fontWeight: "200" }}

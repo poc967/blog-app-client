@@ -22,7 +22,7 @@ class SearchBar extends Component {
 
   findUsers = async (firstName) => {
     const results = await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users/search`,
+      `${process.env.REACT_APP_base_url}/users/search`,
       {
         firstName,
       },
@@ -30,7 +30,6 @@ class SearchBar extends Component {
         withCredentials: true,
       }
     );
-    console.log(results);
     if (results) {
       this.setState({
         results: results.data,
@@ -65,11 +64,7 @@ class SearchBar extends Component {
               />
             </FormGroup>
             <Link to="#">
-              <FaRegArrowAltCircleRight
-                //   onClick={(event) => handleSubmit(event)}
-                size="25px"
-                style={{ color: "grey" }}
-              />
+              <FaRegArrowAltCircleRight size="25px" style={{ color: "grey" }} />
             </Link>
             <PopOverResults
               doesSearchBarHaveContents={this.state.search}

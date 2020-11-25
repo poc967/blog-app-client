@@ -26,7 +26,7 @@ class PopOverResults extends Component {
             {!this.props.isLoading ? (
               this.props.searchResults.length !== 0 ? (
                 this.props.searchResults.map(({ _id, firstName, lastName }) => (
-                  <>
+                  <div key={_id}>
                     <div
                       style={{
                         display: "flex",
@@ -55,7 +55,7 @@ class PopOverResults extends Component {
                       )}
                     </div>
                     <hr style={{ margin: "3px" }} />
-                  </>
+                  </div>
                 ))
               ) : (
                 <span>No results found</span>
