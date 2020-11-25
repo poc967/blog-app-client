@@ -21,7 +21,7 @@ export const getUser = () => async (dispatch, getState) => {
 
   try {
     const response = await axios.get(
-      `https://fathomless-thicket-94988.herokuapp.com/users`,
+      `${process.env.REACT_APP_base_url}/users`,
       {
         withCredentials: true,
       }
@@ -53,7 +53,7 @@ export const authenticateUser = ({ email, password }) => async (dispatch) => {
   const body = { email, password };
   try {
     const response = await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users/login`,
+      `${process.env.REACT_APP_base_url}/users/login`,
       body,
       {
         withCredentials: true,
@@ -85,7 +85,7 @@ export const registerUser = (newUser) => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users`,
+      `${process.env.REACT_APP_base_url}/users`,
       body,
       {
         withCredentials: true,
@@ -111,12 +111,9 @@ export const registerUser = (newUser) => async (dispatch) => {
 
 export const destroySession = () => async (dispatch) => {
   try {
-    await axios.get(
-      `https://fathomless-thicket-94988.herokuapp.com/users/logout`,
-      {
-        withCredentials: true,
-      }
-    );
+    await axios.get(`${process.env.REACT_APP_base_url}/users/logout`, {
+      withCredentials: true,
+    });
     dispatch({
       type: LOGOUT_SUCCESS,
     });
@@ -128,12 +125,9 @@ export const destroySession = () => async (dispatch) => {
 
 export const deleteUser = (payload) => async (dispatch) => {
   try {
-    await axios.delete(
-      `https://fathomless-thicket-94988.herokuapp.com/users/${payload}`,
-      {
-        withCredentials: true,
-      }
-    );
+    await axios.delete(`${process.env.REACT_APP_base_url}/users/${payload}`, {
+      withCredentials: true,
+    });
     dispatch(deleteAllPostsByUser(payload));
     dispatch(destroySession());
   } catch (error) {
@@ -146,7 +140,7 @@ export const updateUser = (payload) => async (dispatch) => {
   const { id, data } = payload;
   try {
     const response = await axios.patch(
-      `https://fathomless-thicket-94988.herokuapp.com/users/${id}`,
+      `${process.env.REACT_APP_base_url}/users/${id}`,
       data,
       {
         withCredentials: true,
@@ -175,7 +169,7 @@ export const addFollower = (payload) => async (dispatch) => {
   const { currentUser, userToFollow } = payload;
   try {
     const response = await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users/add_followers/${currentUser}`,
+      `${process.env.REACT_APP_base_url}/users/add_followers/${currentUser}`,
       {
         userToFollow,
       },
@@ -197,7 +191,7 @@ export const deleteFollower = (payload) => async (dispatch) => {
   const { currentUser, userToUnfollow } = payload;
   try {
     const response = await axios.post(
-      `https://fathomless-thicket-94988.herokuapp.com/users/del_followers/${currentUser}`,
+      `${process.env.REACT_APP_base_url}/users/del_followers/${currentUser}`,
       {
         userToUnfollow,
       },
@@ -205,7 +199,6 @@ export const deleteFollower = (payload) => async (dispatch) => {
         withCredentials: true,
       }
     );
-    console.log(response.data);
     dispatch({
       type: REMOVE_FOLLOWER,
       payload: response.data.followedAccounts,
